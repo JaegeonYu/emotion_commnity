@@ -1,5 +1,6 @@
 package com.jackcomunity.emotionCommunity.entity;
 
+import com.jackcomunity.emotionCommunity.request.PostEdit;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,10 @@ public class Post {
         this.title = title;
         this.content = content;
     }
+
+    public void edit(PostEdit postEdit){
+        this.title = postEdit.getTitle();
+        this.content = postEdit.getContent();
+    }
 }
+

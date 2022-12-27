@@ -5,21 +5,25 @@
 - [x] Controller Thymeleaf mapping
 - [x] RequestDTO, ResponseDTO 생성
 - [ ] Post Create 작성 및 테스트
-  - [ ] PostService write
+  - [x] PostService write
   - [ ] Post RequestDTO @NotBlank, Controller @Valid
-  - [ ] Controller Advice를 통한 Exception Controller 구현
+  - [ ] Binding Result + thymeleaft로 Exception Controll
   - [ ] Service Test
-  - [ ] Controller Test
-  - [ ] Thymeleaf Mapping
+  - [x] Thymeleaf Mapping
 - [ ] Post Read 작성 및 테스트
   - [x] PostService getList
   - [x] 전체 Post 카운트 
-  - [ ] PostService get
+  - [x] PostService get
   - [ ] Service Test
-  - [ ] Controller Test
-  - [ ] Thymeleaf Mapping
-- [ ] Post Update 작성 및 테스트
+  - [x] Thymeleaf Mapping
+- [ ] Post Edit 작성 및 테스트
+  - [x]PostService edit
+  - [x] Thymeleaf Mapping
+  - [ ] Service Test
 - [ ] Post Delete 작성 및 테스트
+  - [x] PostService delete
+  - [x] Thymeleaf Mapping
+  - [ ] Service Test
 ### User
 ### Comment
 ### DB
