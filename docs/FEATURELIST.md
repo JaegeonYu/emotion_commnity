@@ -17,7 +17,7 @@
   - [ ] Service Test
   - [x] Thymeleaf Mapping
 - [ ] Post Edit 작성 및 테스트
-  - [x]PostService edit
+  - [x] PostService edit
   - [x] Thymeleaf Mapping
   - [ ] Service Test
 - [ ] Post Delete 작성 및 테스트
