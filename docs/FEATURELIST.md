@@ -2,7 +2,7 @@
 
 ### Post
 - [x] Repository, Service, Controller 생성
-- [x] Controller tymeleaf mapping
+- [x] Controller Thymeleaf mapping
 - [x] RequestDTO, ResponseDTO 생성
 - [ ] Post Create 작성 및 테스트
   - [ ] PostService write
@@ -12,7 +12,8 @@
   - [ ] Controller Test
   - [ ] Thymeleaf Mapping
 - [ ] Post Read 작성 및 테스트
-  - [ ] PostService getList
+  - [x] PostService getList
+  - [x] 전체 Post 카운트 
   - [ ] PostService get
   - [ ] Service Test
   - [ ] Controller Test
