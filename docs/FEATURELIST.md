@@ -30,7 +30,8 @@
 ### Security
 - [x] webSecurity config 설정
 - [x] Log in view page 생성
-- 
+- [x] AccountController 생성 <-> login thymeleaf mapping
+- [ ] Invalid Login or Logout thymeleaf 설정
 ### Comment
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅
