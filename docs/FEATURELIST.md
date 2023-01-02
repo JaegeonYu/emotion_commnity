@@ -39,6 +39,10 @@
 - [x] Add Controller Sign up and thymeleaf mapping
 - [x] User <-> Role 양방향 연관관계 mapping
 - [x] User Repository, Service 생성
+- [ ] Security <-> JDBC 접근 -> Security <-> JPA 접근으로 변경
+  - [ ] CustomUserDetails 클래스 생성
+  - [ ] CustomUserDetailService 클래스 생성
+  - [ ] Role Entity -> Enum 변경
 ### Comment
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅
