@@ -28,8 +28,8 @@
         <textarea class="form-control" id="content" rows="3" name="content" th:text="${post.content}" disabled></textarea>
       </div>
       <div class="text-end">
-        <a th:href="@{|/board/posts/edit/${post.getId()}|}" class="btn btn-primary">수정</a>
-        <a th:href="@{|/board/posts/delete/${post.getId()}|}" class="btn btn-danger">삭제</a>
+        <a th:href="@{|/board/edit/${post.getId()}|}" class="btn btn-primary">수정</a>
+        <a th:href="@{|/board/delete/${post.getId()}|}" class="btn btn-danger">삭제</a>
       </div>
   </div>
 

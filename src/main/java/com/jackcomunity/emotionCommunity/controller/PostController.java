@@ -5,6 +5,7 @@ import com.jackcomunity.emotionCommunity.request.PostEdit;
 import com.jackcomunity.emotionCommunity.response.PostResponse;
 import com.jackcomunity.emotionCommunity.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +32,9 @@ public class PostController {
     }
 
     @PostMapping("/write")
-    public String create(PostCreate postCreate){
-        postService.write(postCreate);
+    public String create(PostCreate postCreate, Authentication authentication){
+        String username = authentication.getName();
+        postService.write(postCreate, username);
         return "redirect:/board/posts";
     }
 
@@ -43,20 +45,20 @@ public class PostController {
         return "post/postView";
     }
 
-    @GetMapping("/posts/edit/{postId}")
+    @GetMapping("/edit/{postId}")
     public String edit(@PathVariable Long postId, Model model){
         PostResponse postResponse = postService.get(postId);
         model.addAttribute("editPost", postResponse);
         return "/post/postEdit";
     }
 
-    @PostMapping("/posts/edit/{postId}")
+    @PostMapping("/edit/{postId}")
     public String editSave(@PathVariable Long postId, PostEdit postEdit){
         postService.edit(postId, postEdit);
         return "redirect:/board/posts";
     }
 
-    @GetMapping("/posts/delete/{postId}")
+    @GetMapping("/delete/{postId}")
     public String delete(@PathVariable Long postId){
         postService.delete(postId);
         return "redirect:/board/posts";

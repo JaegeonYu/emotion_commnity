@@ -1,11 +1,14 @@
 package com.jackcomunity.emotionCommunity.service;
 
 import com.jackcomunity.emotionCommunity.entity.Post;
+import com.jackcomunity.emotionCommunity.entity.User;
 import com.jackcomunity.emotionCommunity.repository.PostRepository;
+import com.jackcomunity.emotionCommunity.repository.UserRepository;
 import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
 import com.jackcomunity.emotionCommunity.response.PostResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,12 +19,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public void write(PostCreate postCreate) {
-        postRepository.save(Post.builder()
+    @Transactional
+    public void write(PostCreate postCreate, String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
+        Post writePost = Post.builder()
                 .title(postCreate.getTitle())
                 .content(postCreate.getContent())
-                .build());
+                .build();
+        user.addPost(writePost);// 컨비니언스 메소드
+        postRepository.save(writePost);
     }
 
     public List<PostResponse> getList() {
@@ -36,6 +44,7 @@ public class PostService {
                 .post(post)
                 .build();
     }
+
     @Transactional
     public void edit(Long postId, PostEdit postEdit) {
         Post post = postRepository.findById(postId)
@@ -43,7 +52,7 @@ public class PostService {
         post.edit(postEdit);
     }
 
-    public void delete(Long postId){
+    public void delete(Long postId) {
         postRepository.deleteById(postId);
     }
 }

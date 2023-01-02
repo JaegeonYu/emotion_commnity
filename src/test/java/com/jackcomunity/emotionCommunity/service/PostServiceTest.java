@@ -37,7 +37,7 @@ class PostServiceTest {
                 .title("title1")
                 .content("content1")
                 .build();
-        postService.write(post);
+        postService.write(post, "eel");
 
         Assertions.assertEquals(1L, postRepository.count());
     }

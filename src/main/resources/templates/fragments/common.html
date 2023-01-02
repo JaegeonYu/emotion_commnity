@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extars/spring-security">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,6 +14,15 @@
             <div class="container-fluid" >
                 <a class="navbar-brand" th:href="@{/board/posts}">Emotion Community</a>
             </div>
+
+            <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/account/login}"
+                sec:authorize = "!isAuthenticated()">Login</a>
+            <form class="form-check-inline my-2 my-lg-0" sec:authorize = "isAuthenticated()"
+            th:action="@{/logout}" method="post">
+                <sapn class="text-white" sec:authentication="name">사용자</sapn>
+                <sapn class="text-white" sec:authentication="principal.authorities">권한</sapn>
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">LogOut</button>
+            </form>
         </nav>
 </body>
 </html>

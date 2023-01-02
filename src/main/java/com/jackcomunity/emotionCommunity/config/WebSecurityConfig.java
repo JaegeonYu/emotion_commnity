@@ -20,18 +20,17 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final DataSource dataSource;
-
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                    .antMatchers("/board/posts", "/css/**").permitAll()
+                    .antMatchers("/board/posts/**","/account/signup", "/css/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/account/login")
+                .defaultSuccessUrl("/board/posts")
                     .permitAll()
                     .and()
                 .logout()
@@ -39,18 +38,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder()) // 추가
                 .usersByUsernameQuery("select username, password, enabled "
                         + "from user "
                         + "where username = ?")
-                .authoritiesByUsernameQuery("select username, name "
+                .authoritiesByUsernameQuery("select u.username, r.name "
                         + "from user_role ur inner join user u on ur.user_id = u.id "
                         + "inner join role r on ur.role_id = r.id "
-                        + "where email = ?");
+                        + "where u.username = ?");
     }
 
     @Bean

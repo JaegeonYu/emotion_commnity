@@ -27,11 +27,19 @@ public class User {
             name="user_role",
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
     @Builder
     public User(String username, String password, Boolean enabled) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
+    }
+
+    public void addPost(Post post){
+        post.setUser(this);
+        posts.add(post);
     }
 }

@@ -149,6 +149,8 @@ fabric.properties
 .idea/codestream.xml
 ### application-security.yml
 application-security.yml
+### application-aws.yml
+application-aws.yml
 # Azure Toolkit for IntelliJ plugin
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml

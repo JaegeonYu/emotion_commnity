@@ -32,7 +32,7 @@
                 <tr th:each="post : ${posts}">
                     <th th:text="${post.getId()}">1</th>
                     <td><a th:text="${post.getTitle()}" th:href="@{|/board/posts/${post.id}|}">Mark</a></td>
-                    <td>작성자 들어갈 곳</td>
+                    <td th:text="${post.user.username}">작성자 들어갈 곳</td>
                 </tr>
                 </tbody>
             </table>
