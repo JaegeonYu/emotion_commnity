@@ -17,13 +17,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebSecurity
 @RequiredArgsConstructor
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
     private final DataSource dataSource;
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                     .antMatchers("/board/posts/**","/account/signup", "/css/**").permitAll()
                     .anyRequest().authenticated()
@@ -35,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .logout()
                     .permitAll();
+        return http.build();
     }
 
     @Autowired
