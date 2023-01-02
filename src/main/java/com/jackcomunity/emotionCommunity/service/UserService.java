@@ -1,11 +1,10 @@
 package com.jackcomunity.emotionCommunity.service;
 
-import com.jackcomunity.emotionCommunity.entity.Role;
+import com.jackcomunity.emotionCommunity.entity.Roles;
 import com.jackcomunity.emotionCommunity.entity.User;
 import com.jackcomunity.emotionCommunity.repository.UserRepository;
 import com.jackcomunity.emotionCommunity.request.UserCreate;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +19,9 @@ public class UserService {
         User registerUser = User.builder()
                 .username(userCreate.getUsername())
                 .password(encodedPassword)
-                .enabled(true)
+                .role(Roles.USER)
                 .build();
-        Role role = new Role();
-        role.setId(1L);
-        registerUser.getRoles().add(role);
+
         userRepository.save(registerUser);
     }
 }

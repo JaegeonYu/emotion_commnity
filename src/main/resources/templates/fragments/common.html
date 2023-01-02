@@ -9,20 +9,23 @@
           rel="stylesheet">
     <title>Emotion Community</title>
 </head>
-<body>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" th:fragment="menu">
-            <div class="container-fluid" >
-                <a class="navbar-brand" th:href="@{/board/posts}">Emotion Community</a>
-            </div>
+<body class="d-flex flex-column h-100">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark " th:fragment="menu">
+    <div class="collapse navbar-collapse">
+    <a class="navbar-brand" th:href="@{/board/posts}">Emotion Community</a>
+    </div>
 
-            <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/account/login}"
-                sec:authorize = "!isAuthenticated()">Login</a>
-            <form class="form-check-inline my-2 my-lg-0" sec:authorize = "isAuthenticated()"
-            th:action="@{/logout}" method="post">
-                <sapn class="text-white" sec:authentication="name">사용자</sapn>
-                <sapn class="text-white" sec:authentication="principal.authorities">권한</sapn>
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">LogOut</button>
-            </form>
-        </nav>
+    <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/account/login}"
+       sec:authorize="!isAuthenticated()">로그인</a>
+    <a class="btn btn-secondary my-2 my-sm-0" th:href="@{/account/signup}"
+       sec:authorize="!isAuthenticated()">회원가입</a>
+    <form class="form-check-inline my-2 my-lg-0" sec:authorize="isAuthenticated()"
+          th:action="@{/logout}" method="post">
+        <sapn class="text-white" sec:authentication="name">사용자</sapn>
+        <sapn class="text-white">님 안녕하세요</sapn>
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">로그아웃</button>
+    </form>
+
+</nav>
 </body>
 </html>

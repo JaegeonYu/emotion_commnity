@@ -21,21 +21,17 @@ public class User {
     @Column(nullable = false, length = 100)
     private String password;
 
-    private Boolean enabled;
-    @ManyToMany
-    @JoinTable(
-            name="user_role",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private Roles role;
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
     @Builder
-    public User(String username, String password, Boolean enabled) {
+    public User(String username, String password, Roles role) {
         this.username = username;
         this.password = password;
-        this.enabled = enabled;
+        this.role = role;
+
     }
 
     public void addPost(Post post){
