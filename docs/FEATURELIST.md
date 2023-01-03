@@ -45,12 +45,12 @@
   - [x] Role Entity -> Enum 변경
 
 ### Page
-- [ ] PageDTO 생성
-  - [ ] 시작페이지, 끝페이지, 현재페이지, Page 객체
-- [ ] PostService getList 메소드 Pageable 파라미터 추가
-- [ ] PostController Pageable 파라미터 추가
-- [ ] Thymeleaf pagination view 추가
-  - [ ] each, classAppend, link 추가
+- [x] PageDTO 생성
+  - [x] 시작페이지, 끝페이지, 현재페이지, Page 객체
+- [x] PostService getList 메소드 Pageable 파라미터 추가
+- [x] PostController Pageable 파라미터 추가
+- [x] Thymeleaf pagination view 추가
+  - [x] each, classAppend, link 추가
 ### Comment
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅

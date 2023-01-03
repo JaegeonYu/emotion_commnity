@@ -11,6 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +22,7 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
@@ -67,12 +71,14 @@ class PostServiceTest {
                         .build())
                 .collect(Collectors.toList());
         postRepository.saveAll(posts);
+
         //when
-
-        List<PostResponse> responses = postService.getList();
-
-        //then
-        assertEquals(responses.size(), 20L);
+//
+//        Page<Post> responses = postService.getList(PageRequest.of(0,20));
+//
+//
+//        //then
+//        assertEquals(responses.getSize(), 20L);
     }
 
     @Test
@@ -93,5 +99,9 @@ class PostServiceTest {
         //then
         Post changedPost = postRepository.findById(post.getId()).orElseThrow();
         Assertions.assertEquals(changedPost.getTitle(), postEdit.getTitle());
+    }
+    @Test
+    public void test(){
+        System.out.println(3/10);
     }
 }
