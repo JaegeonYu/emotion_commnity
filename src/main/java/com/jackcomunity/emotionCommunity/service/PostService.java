@@ -8,12 +8,10 @@ import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
 import com.jackcomunity.emotionCommunity.response.PostResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,10 +30,8 @@ public class PostService {
         postRepository.save(writePost);
     }
 
-    public List<PostResponse> getList() {
-        return postRepository.findAll().stream()
-                .map(PostResponse::new)
-                .collect(Collectors.toList());
+    public Page<PostResponse> getList(Pageable pageable) {
+        return postRepository.findAll(pageable).map(PostResponse::new);
     }
 
     public PostResponse get(Long id) {
