@@ -43,6 +43,14 @@
   - [x] CustomUserDetails 클래스 생성
   - [x] CustomUserDetailService 클래스 생성
   - [x] Role Entity -> Enum 변경
+
+### Page
+- [ ] PageDTO 생성
+  - [ ] 시작페이지, 끝페이지, 현재페이지, Page 객체
+- [ ] PostService getList 메소드 Pageable 파라미터 추가
+- [ ] PostController Pageable 파라미터 추가
+- [ ] Thymeleaf pagination view 추가
+  - [ ] each, classAppend, link 추가
 ### Comment
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅
