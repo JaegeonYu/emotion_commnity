@@ -61,6 +61,7 @@
 ### Comment
 - [ ] Comment Entity 생성
 - [ ] Comment Repository, Service, Controller 생성
+- [ ] Comment Service write,update 시 네이버 감정분석 API 연결할 Comment API Controller 생성
 - [ ] Post <-> Comment 연관관계 맵핑(N:1)
 - [ ] User <-> Comment 연관관계 맵핑(N:1)
 - [ ] Comment Dto 생성
