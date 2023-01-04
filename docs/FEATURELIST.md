@@ -53,9 +53,10 @@
   - [x] each, classAppend, link 추가
 
 ### Search
-- [ ] Repository Containing 메소드 추가
-- [ ] Thymeleaf view 검색 부분 추가
-- [ ] PostController, Service search 메소드 추가
+- [x] Repository Containing 메소드 추가
+- [x] Thymeleaf view 검색 부분 추가
+- [x] PostController, Service search 메소드 추가
+- [x] Security Config search 권한 설정
 
 ### Comment
 ### DB

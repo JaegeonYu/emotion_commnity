@@ -29,7 +29,7 @@ public class PageDto<T> {
         int totalPages =contents.getTotalPages();
         int nowPage = contents.getPageable().getPageNumber() + 1;
         int startPage = 1 * VIEWPAGESIZE * (nowPage / VIEWPAGESIZE);
-        int endPage = startPage + VIEWPAGESIZE - 1;
+        int endPage = startPage + VIEWPAGESIZE -1;
 
         return new PageDto<>(startPage == 0 ? 1 : startPage, endPage > totalPages ? totalPages : endPage,nowPage, totalPages, contents);
     }
