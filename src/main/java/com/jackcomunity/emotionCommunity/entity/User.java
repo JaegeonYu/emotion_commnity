@@ -24,6 +24,8 @@ public class User {
     private Roles role;
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder
     public User(String username, String password, Roles role) {
@@ -33,8 +35,13 @@ public class User {
 
     }
 
-    public void addPost(Post post){
+    public void addPost(Post post) {
         post.setUser(this);
         posts.add(post);
+    }
+
+    public void addComment(Comment comment) {
+        comment.setUser(this);
+        comments.add(comment);
     }
 }

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -22,6 +24,9 @@ public class Post {
     @Setter
     private User user;
 
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments = new ArrayList<>();
+
     @Builder
     public Post(String title, String content) {
         this.title = title;
@@ -31,6 +36,11 @@ public class Post {
     public void edit(PostEdit postEdit) {
         this.title = postEdit.getTitle();
         this.content = postEdit.getContent();
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setPost(this);
     }
 }
 
