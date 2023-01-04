@@ -34,6 +34,10 @@ public class PostService {
         return postRepository.findAll(pageable).map(PostResponse::new);
     }
 
+    public Page<PostResponse> search(String searchText, Pageable pageable) {
+        return postRepository.findByTitleContainingOrContentContaining(searchText, searchText, pageable).map(PostResponse::new);
+    }
+
     public PostResponse get(Long id) {
         Post post = postRepository.findById(id).orElseThrow();
         return PostResponse.builder()

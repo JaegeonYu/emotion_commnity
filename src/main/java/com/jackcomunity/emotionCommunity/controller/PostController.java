@@ -8,6 +8,7 @@ import com.jackcomunity.emotionCommunity.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -24,10 +25,11 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/posts")
-    public String list(Model model, @PageableDefault(size = 2) Pageable pageable) {
+    public String list(Model model, @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)
+    Pageable pageable) {
         Page<PostResponse> posts = postService.getList(pageable);
-        PageDto<PostResponse> postList = PageDto.of(posts);
-        model.addAttribute("posts", postList);
+        PageDto<PostResponse> postPageResponse = PageDto.of(posts);
+        model.addAttribute("posts", postPageResponse);
 
         return "post/posts";
     }
@@ -37,6 +39,16 @@ public class PostController {
         PostResponse postResponse = postService.get(postId);
         model.addAttribute("post", postResponse);
         return "post/postView";
+    }
+
+    @GetMapping("/search")
+    public String search(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                         String searchText, Model model) {
+        Page<PostResponse> searchPosts = postService.search(searchText, pageable);
+        PageDto searchPageResponse = PageDto.of(searchPosts);
+        model.addAttribute("posts", searchPageResponse);
+        model.addAttribute("searchText", searchText);
+        return "post/postSearch";
     }
 
     @GetMapping("/write")
