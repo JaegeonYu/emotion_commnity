@@ -51,6 +51,12 @@
 - [x] PostController Pageable 파라미터 추가
 - [x] Thymeleaf pagination view 추가
   - [x] each, classAppend, link 추가
+
+### Search
+- [ ] Repository Containing 메소드 추가
+- [ ] Thymeleaf view 검색 부분 추가
+- [ ] PostController, Service search 메소드 추가
+
 ### Comment
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅
