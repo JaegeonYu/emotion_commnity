@@ -59,5 +59,11 @@
 - [x] Security Config search 권한 설정
 
 ### Comment
+- [ ] Comment Entity 생성
+- [ ] Comment Repository, Service, Controller 생성
+- [ ] Post <-> Comment 연관관계 맵핑(N:1)
+- [ ] User <-> Comment 연관관계 맵핑(N:1)
+- [ ] Comment Dto 생성
+- [ ] Thymeleaf 게시글 상세보기 View 댓글 리스트, 작성 폼 추가
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅

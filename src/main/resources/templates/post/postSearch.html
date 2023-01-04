@@ -20,10 +20,10 @@
   <div class="container">
     <h2 class="mt-5">게시판</h2>
     <div>총 건수 : <span th:text="${posts.contents.totalElements}"></span></div>
-    <form class="form-inline d-flex justify-content-end" method="get" th:action="@{/board/search/}" th:value="${param.searchText}">
+    <form class="form-inline d-flex justify-content-end" method="get" th:action="@{/board/search/}" >
       <div class="form-group mx-sm-3 mb-2">
         <label for="searchText" class="sr-only"></label>
-        <input type="text" class="form-control" id="searchText" name="searchText">
+        <input type="text" class="form-control" id="searchText" name="searchText" th:value="${searchText}">
       </div>
       <button type="submit" class="btn btn-light mb-2">search</button>
     </form>
