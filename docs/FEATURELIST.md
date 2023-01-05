@@ -65,7 +65,7 @@
 - [ ] Comment Service write,update 시 네이버 감정분석 API 연결할 Comment API Controller 생성
 - [x] Post <-> Comment 연관관계 맵핑(N:1)
 - [x] User <-> Comment 연관관계 맵핑(N:1)
-- [ ] Comment Dto 생성
+- [x] Comment Dto 생성
 - [ ] Thymeleaf 게시글 상세보기 View 댓글 리스트, 작성 폼 추가
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅
