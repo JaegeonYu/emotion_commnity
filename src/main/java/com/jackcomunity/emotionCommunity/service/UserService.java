@@ -1,6 +1,6 @@
 package com.jackcomunity.emotionCommunity.service;
 
-import com.jackcomunity.emotionCommunity.entity.Roles;
+import com.jackcomunity.emotionCommunity.util.Roles;
 import com.jackcomunity.emotionCommunity.entity.User;
 import com.jackcomunity.emotionCommunity.repository.UserRepository;
 import com.jackcomunity.emotionCommunity.request.UserCreate;

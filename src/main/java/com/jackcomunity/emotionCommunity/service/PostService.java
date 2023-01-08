@@ -22,10 +22,8 @@ public class PostService {
     @Transactional
     public void write(PostCreate postCreate, String username) {
         User user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
-        Post writePost = Post.builder()
-                .title(postCreate.getTitle())
-                .content(postCreate.getContent())
-                .build();
+        postCreate.setUser(user);
+        Post writePost = postCreate.toEntity();
         user.addPost(writePost);// 컨비니언스 메소드
         postRepository.save(writePost);
     }
