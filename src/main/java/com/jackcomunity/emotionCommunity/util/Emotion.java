@@ -1,4 +1,4 @@
-package com.jackcomunity.emotionCommunity.entity;
+package com.jackcomunity.emotionCommunity.util;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

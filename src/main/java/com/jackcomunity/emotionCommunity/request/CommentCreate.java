@@ -1,7 +1,7 @@
 package com.jackcomunity.emotionCommunity.request;
 
 import com.jackcomunity.emotionCommunity.entity.Comment;
-import com.jackcomunity.emotionCommunity.entity.Emotion;
+import com.jackcomunity.emotionCommunity.util.Emotion;
 import com.jackcomunity.emotionCommunity.entity.Post;
 import com.jackcomunity.emotionCommunity.entity.User;
 import lombok.Builder;
@@ -16,11 +16,8 @@ public class CommentCreate {
     private User user;
 
     @Builder
-    public CommentCreate(String content, Emotion emotion, Post post, User user) {
+    public CommentCreate(String content) {
         this.content = content;
-        this.emotion = emotion;
-        this.post = post;
-        this.user = user;
     }
 
     public Comment toEntity(){

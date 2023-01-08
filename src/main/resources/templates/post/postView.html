@@ -28,6 +28,8 @@
         <label for="content">내용</label>
         <textarea class="form-control" id="content" rows="3" name="content" th:text="${post.content}" disabled></textarea>
       </div>
+    <div th:replace="fragments/comment :: commentList"></div>
+    <div th:replace="fragments/comment :: commentForm"></div>
       <div class="text-end" sec:authorize="isAuthenticated()">
         <a th:href="@{|/board/edit/${post.getId()}|}"  class="btn btn-primary">수정</a>
         <a th:href="@{|/board/delete/${post.getId()}|}" class="btn btn-danger">삭제</a>

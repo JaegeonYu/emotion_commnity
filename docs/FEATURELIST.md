@@ -62,10 +62,18 @@
 - [x] Comment Entity 생성
 - [x] Comment Repository 생성
 - [ ] Comment Service, Controller 생성
-- [ ] Comment Service write,update 시 네이버 감정분석 API 연결할 Comment API Controller 생성
+  - [ ] Comment Create 작성
+  - [ ] Comment delete 작성
+  - [ ] Comment update 작성
+- [ ] Comment Service write,update 시 네이버 감정분석 API 호출 및 값 저장
+  - [x] Rest Template API 호출
+  - [ ] http response status 200 -> 과정 진행
+  - [x] Parsing Class 생성
 - [x] Post <-> Comment 연관관계 맵핑(N:1)
 - [x] User <-> Comment 연관관계 맵핑(N:1)
 - [x] Comment Dto 생성
-- [ ] Thymeleaf 게시글 상세보기 View 댓글 리스트, 작성 폼 추가
+- [ ] PostController, Service 상세보기에 댓글 추가
+  - [ ] PostDto 댓글추가
+- [x] Thymeleaf 게시글 상세보기 View 댓글 리스트, 작성 폼 추가
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅

@@ -17,9 +17,12 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 50, nullable = false)
     private String title;
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @Setter
     private User user;
@@ -28,9 +31,10 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Post(String title, String content) {
+    public Post(String title, String content, User user) {
         this.title = title;
         this.content = content;
+        this.user = user;
     }
 
     public void edit(PostEdit postEdit) {

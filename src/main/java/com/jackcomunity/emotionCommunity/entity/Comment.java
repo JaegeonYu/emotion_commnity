@@ -1,5 +1,6 @@
 package com.jackcomunity.emotionCommunity.entity;
 
+import com.jackcomunity.emotionCommunity.util.Emotion;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Comment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String content;

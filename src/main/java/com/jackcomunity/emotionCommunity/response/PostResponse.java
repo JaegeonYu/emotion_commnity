@@ -13,7 +13,7 @@ public class PostResponse {
     private Long id;
     private String title;
     private String content;
-    private Long userId;
+    private User user;
 
     private List<CommentResponse> commentResponses;
     @Builder
@@ -21,7 +21,7 @@ public class PostResponse {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.userId = post.getUser().getId();
+        this.user = post.getUser();
         this.commentResponses = post.getComments().stream().map(CommentResponse::new).collect(Collectors.toList());
     }
 }
