@@ -40,6 +40,11 @@ public class PostController {
     @GetMapping("/posts/{postId}")
     public String get(@PathVariable Long postId, Model model) {
         PostResponse postResponse = postService.get(postId);
+
+        List<CommentResponse> comments = postResponse.getCommentResponses();
+        if (!comments.isEmpty()) {
+            model.addAttribute("comments", comments);
+        }
         model.addAttribute("post", postResponse);
         return "post/postView";
     }
