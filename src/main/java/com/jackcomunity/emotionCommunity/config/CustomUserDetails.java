@@ -17,7 +17,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String[] arr = new String[]{ user.getRole().getAuth()};
+        String[] arr = new String[]{user.getRole().getAuth()};
         Collection<GrantedAuthority> collectors = AuthorityUtils.createAuthorityList(arr);
         //collectors.add(() -> user.getRole().getAuth());
 
