@@ -19,7 +19,11 @@ public class User extends TimeEntity {
     private Long id;
     @Column(unique = true, nullable = false)
     private String username;
+    @Column(nullable = false)
+    private String nickname;
 
+    @Column(nullable = false)
+    private String email;
     @Column(nullable = false, length = 100)
     private String password;
 
@@ -31,8 +35,10 @@ public class User extends TimeEntity {
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public User(String username, String password, Roles role) {
+    public User(String username, String nickname, String email, String password, Roles role) {
         this.username = username;
+        this.nickname = nickname;
+        this.email = email;
         this.password = password;
         this.role = role;
 

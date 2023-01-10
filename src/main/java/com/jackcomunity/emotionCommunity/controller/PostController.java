@@ -1,5 +1,6 @@
 package com.jackcomunity.emotionCommunity.controller;
 
+import com.jackcomunity.emotionCommunity.config.CustomUserDetails;
 import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
 import com.jackcomunity.emotionCommunity.response.CommentResponse;
@@ -12,10 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -26,21 +29,26 @@ public class PostController {
 
     @GetMapping("/posts")
     public String list(Model model, @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)
-    Pageable pageable) {
+    Pageable pageable, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Page<PostResponse> posts = postService.getList(pageable);
         PageDto<PostResponse> postPageResponse = PageDto.of(posts);
         model.addAttribute("posts", postPageResponse);
-
+        if(userDetails != null){
+            model.addAttribute("nickname", userDetails.getNickname());
+        }
         return "post/posts";
     }
 
     @GetMapping("/posts/{postId}")
-    public String get(@PathVariable Long postId, Model model) {
+    public String get(@PathVariable Long postId, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         PostResponse postResponse = postService.get(postId);
 
         List<CommentResponse> comments = postResponse.getCommentResponses();
         if (!comments.isEmpty()) {
             model.addAttribute("comments", comments);
+        }
+        if(userDetails != null){
+            model.addAttribute("nickname", userDetails.getNickname());
         }
         model.addAttribute("post", postResponse);
         return "post/postView";
@@ -48,16 +56,22 @@ public class PostController {
 
     @GetMapping("/search")
     public String search(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                         String searchText, Model model) {
+                         String searchText, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Page<PostResponse> searchPosts = postService.search(searchText, pageable);
         PageDto searchPageResponse = PageDto.of(searchPosts);
         model.addAttribute("posts", searchPageResponse);
         model.addAttribute("searchText", searchText);
+        if(userDetails != null){
+            model.addAttribute("nickname", userDetails.getNickname());
+        }
         return "post/postSearch";
     }
 
     @GetMapping("/write")
-    public String addForm() {
+    public String addForm(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+        if(userDetails != null){
+            model.addAttribute("nickname", userDetails.getNickname());
+        }
         return "post/postForm";
     }
 
@@ -69,9 +83,12 @@ public class PostController {
     }
 
     @GetMapping("/edit/{postId}")
-    public String edit(@PathVariable Long postId, Model model) {
+    public String edit(@PathVariable Long postId, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         PostResponse postResponse = postService.get(postId);
         model.addAttribute("editPost", postResponse);
+        if(userDetails != null){
+            model.addAttribute("nickname", userDetails.getNickname());
+        }
         return "/post/postEdit";
     }
 

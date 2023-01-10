@@ -3,6 +3,7 @@ package com.jackcomunity.emotionCommunity.config;
 import com.jackcomunity.emotionCommunity.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,6 +34,8 @@ public class CustomUserDetails implements UserDetails {
     public String getUsername() {
         return user.getUsername();
     }
+
+    public String getNickname(){return user.getNickname();}
 
     @Override
     public boolean isAccountNonExpired() {

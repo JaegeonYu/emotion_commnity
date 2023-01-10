@@ -14,7 +14,7 @@ public class PostResponse {
     private Long id;
     private String title;
     private String content;
-    private Long userId;
+    private String nickname;
     private String username;
     private LocalDate createDate;
     private List<CommentResponse> commentResponses;
@@ -23,7 +23,7 @@ public class PostResponse {
         this.id = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.userId = post.getUser().getId();
+        this.nickname = post.getUser().getNickname();
         this.username = post.getUser().getUsername();
         this.createDate = post.getCreatedDate();
         this.commentResponses = post.getComments().stream().map(CommentResponse::new).collect(Collectors.toList());

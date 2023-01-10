@@ -16,12 +16,9 @@ public class UserService {
 
     public void save(UserCreate userCreate){
         String encodedPassword = passwordEncoder.encode(userCreate.getPassword());
-        User registerUser = User.builder()
-                .username(userCreate.getUsername())
-                .password(encodedPassword)
-                .role(Roles.USER)
-                .build();
+        userCreate.setPassword(encodedPassword);
+        userCreate.setRole(Roles.USER);
 
-        userRepository.save(registerUser);
+        userRepository.save(userCreate.toEntity());
     }
 }

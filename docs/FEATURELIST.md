@@ -34,6 +34,7 @@
 - [x] Post <-> User 연관관계 mapping
 - [x] User, Post 컨비니언스 메소드 생성 
 - [x] JPA AUDITING extends 추가
+- [x] nickname, email field 추가
 
 ### Security
 - [x] webSecurity config 설정
@@ -44,10 +45,11 @@
 - [x] Add Controller Sign up and thymeleaf mapping
 - [x] User <-> Role 양방향 연관관계 mapping
 - [x] User Repository, Service 생성
-- [ ] Security <-> JDBC 접근 -> Security <-> JPA 접근으로 변경
+- [x] Security <-> JDBC 접근 -> Security <-> JPA 접근으로 변경
   - [x] CustomUserDetails 클래스 생성
   - [x] CustomUserDetailService 클래스 생성
   - [x] Role Entity -> Enum 변경
+- [x] UserDetail nickname 추가, Controller @AuthenticationPrincipal 접근
 
 ### Page
 - [x] PageDTO 생성
