@@ -25,12 +25,15 @@
   - [x] PostService delete
   - [x] Thymeleaf Mapping
   - [x] Service Test
-- [x] 작성자만 Post Delete, Update button 접근
-  - [x] Thymeleaf Security가 관리하는 세션의 유저이름 Post model 속의 유저이름이 같을 때
+- [x] 작성자만 Post Delete, Update button 접근제어
+  - [x] Thymeleaf Security가 관리하는 세션의 유저이름 Post model 속의 유저이름이 같을 때 접근가능
+- [x] JPA AUDITING extends 추가
+
 ### User
 - [x] Entity 생성
 - [x] Post <-> User 연관관계 mapping
 - [x] User, Post 컨비니언스 메소드 생성 
+- [x] JPA AUDITING extends 추가
 
 ### Security
 - [x] webSecurity config 설정

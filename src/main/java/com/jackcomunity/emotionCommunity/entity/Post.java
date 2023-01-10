@@ -1,6 +1,7 @@
 package com.jackcomunity.emotionCommunity.entity;
 
 import com.jackcomunity.emotionCommunity.request.PostEdit;
+import com.jackcomunity.emotionCommunity.util.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Post {
+public class Post extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

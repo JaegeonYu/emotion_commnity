@@ -14,10 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -65,7 +62,7 @@ public class PostController {
     }
 
     @PostMapping("/write")
-    public String create(PostCreate postCreate, Authentication authentication) {
+    public String create(PostCreate postCreate, Authentication authentication, Model model) {
         String username = authentication.getName();
         postService.write(postCreate, username);
         return "redirect:/board/posts";

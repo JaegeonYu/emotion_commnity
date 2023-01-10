@@ -33,13 +33,15 @@
                 <th scope="col">글번호</th>
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
+                <th scope="col">작성자</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="post : ${posts.contents}">
                 <th th:text="${post.id}">1</th>
                 <td><a th:text="${post.title}" th:href="@{|/board/posts/${post.id}|}">Mark</a></td>
-                <td th:text="${post.user.username}">작성자 들어갈 곳</td>
+                <td th:text="${post.username}">작성자 들어갈 곳</td>
+                <td th:text="${post.createDate}">작성시간 들어갈 곳</td>
             </tr>
             </tbody>
         </table>

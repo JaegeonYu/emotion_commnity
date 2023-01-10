@@ -1,6 +1,7 @@
 package com.jackcomunity.emotionCommunity.entity;
 
 import com.jackcomunity.emotionCommunity.util.Roles;
+import com.jackcomunity.emotionCommunity.util.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +13,13 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User {
+public class User extends TimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false)
     private String username;
+
     @Column(nullable = false, length = 100)
     private String password;
 
