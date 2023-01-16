@@ -1,4 +1,4 @@
-package com.jackcomunity.emotionCommunity.config;
+package com.jackcomunity.emotionCommunity.security;
 
 import com.jackcomunity.emotionCommunity.entity.User;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private final User user;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

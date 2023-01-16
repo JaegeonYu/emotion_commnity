@@ -1,4 +1,4 @@
-package com.jackcomunity.emotionCommunity.config;
+package com.jackcomunity.emotionCommunity.security;
 
 import com.jackcomunity.emotionCommunity.entity.User;
 import com.jackcomunity.emotionCommunity.repository.UserRepository;

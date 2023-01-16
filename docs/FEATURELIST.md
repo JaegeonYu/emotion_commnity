@@ -70,9 +70,9 @@
 - [x] Comment Repository 생성
 - [ ] Comment Service, Controller 생성
   - [x] Comment Create 작성
-  - [ ] Comment delete 작성
-  - [ ] Comment update 작성
-- [ ] Comment Service write,update 시 네이버 감정분석 API 호출 및 값 저장
+  - [x] Comment delete 작성
+  - [x] Comment update 작성
+- [x] Comment Service write,update 시 네이버 감정분석 API 호출 및 값 저장
   - [x] Rest Template API 호출
   - [ ] http response status 200 -> 과정 진행
   - [x] Parsing Class 생성
@@ -82,5 +82,6 @@
 - [x] PostController, Service 상세보기에 댓글 추가
   - [x] PostDto 댓글추가
 - [x] Thymeleaf 게시글 상세보기 View 댓글 리스트, 작성 폼 추가
+- [ ] 비동기로 변경 후 새로고침 없이 댓글 컨트롤
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅

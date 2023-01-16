@@ -19,7 +19,7 @@
 <main class="flex-shrink-0">
   <div class="container">
     <h2 class="mt-5">게시물 수정</h2>
-    <form th:action="@{|/board/edit/${editPost.getId()}|}" method="post">
+    <form th:action="@{|/posts/edit/${editPost.getId()}|}" th:method="put">
       <div class="form-group">
         <label for="title">제목</label>
         <input type="text" class="form-control" id="title" name="title" th:value="${editPost.title}">
@@ -30,7 +30,7 @@
       </div>
       <div class="text-end">
         <button type="submit" class="btn btn-primary">글쓰기</button>
-        <a th:href="@{/board/posts}" class="btn btn-secondary">목록으로</a>
+        <a th:href="@{/posts}" class="btn btn-secondary">목록으로</a>
       </div>
     </form>
   </div>

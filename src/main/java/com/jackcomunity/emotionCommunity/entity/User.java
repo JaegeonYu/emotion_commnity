@@ -44,10 +44,6 @@ public class User extends TimeEntity {
 
     }
 
-    public void addPost(Post post) {
-        post.setUser(this);
-        posts.add(post);
-    }
 
     public void addComment(Comment comment) {
         comment.setUser(this);

@@ -11,16 +11,14 @@ public class CommentResponse {
     private String content;
     private Emotion emotion;
     private String username;
-    private Long userId;
-    private Long postId;
+    private String nickname;
 
     @Builder
     public CommentResponse(Comment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
         this.emotion = comment.getEmotion();
-        this.postId = comment.getPost().getId();
-        this.userId = comment.getUser().getId();
         this.username = comment.getUser().getUsername();
+        this.nickname = comment.getUser().getNickname();
     }
 }

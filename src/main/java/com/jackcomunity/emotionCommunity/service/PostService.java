@@ -24,7 +24,7 @@ public class PostService {
         User user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
         postCreate.setUser(user);
         Post writePost = postCreate.toEntity();
-        user.addPost(writePost);// 컨비니언스 메소드
+
         postRepository.save(writePost);
     }
 

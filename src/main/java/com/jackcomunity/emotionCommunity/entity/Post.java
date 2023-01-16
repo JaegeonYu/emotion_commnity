@@ -25,7 +25,6 @@ public class Post extends TimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @Setter
     private User user;
 
     @OneToMany(mappedBy = "post")

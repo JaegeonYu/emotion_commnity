@@ -20,7 +20,7 @@
     <div class="container">
         <h2 class="mt-5">게시판</h2>
         <div>총 건수 : <span th:text="${posts.contents.totalElements}"></span></div>
-        <form class="form-inline d-flex justify-content-end" method="get" th:action="@{/board/search/}">
+        <form class="form-inline d-flex justify-content-end" method="get" th:action="@{/posts/search/}">
             <div class="form-group mx-sm-3 mb-2">
                 <label for="searchText" class="sr-only"></label>
                 <input type="text" class="form-control" id="searchText" name="searchText">
@@ -33,13 +33,13 @@
                 <th scope="col">글번호</th>
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
-                <th scope="col">작성자</th>
+                <th scope="col">작성일자</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="post : ${posts.contents}">
                 <th th:text="${post.id}">1</th>
-                <td><a th:text="${post.title}" th:href="@{|/board/posts/${post.id}|}">Mark</a></td>
+                <td><a th:text="${post.title}" th:href="@{|/posts/read/${post.id}|}">Mark</a></td>
                 <td th:text="${post.nickname}">작성자 들어갈 곳</td>
                 <td th:text="${post.createDate}">작성시간 들어갈 곳</td>
             </tr>
@@ -48,19 +48,19 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item" th:classappend="${1==posts.nowPage} ? 'disabled'">
-                    <a class="page-link" th:href="@{/board/posts(page=${posts.nowPage -2})}">Previous</a>
+                    <a class="page-link" th:href="@{/posts(page=${posts.nowPage -2})}">Previous</a>
                 </li>
                 <li class="page-item" th:classappend="${i==posts.nowPage} ? 'disabled'"
                     th:each="i : ${#numbers.sequence(posts.startPage, posts.endPage)}">
-                    <a class="page-link" th:href="@{/board/posts(page=${i - 1})}" th:text="${i}">1</a></li>
+                    <a class="page-link" th:href="@{/posts(page=${i - 1})}" th:text="${i}">1</a></li>
 
                 <li class="page-item" th:classappend="${posts.totalPages==posts.nowPage} ? 'disabled'">
-                        <a class="page-link" href="#" th:href="@{/board/posts(page=${posts.nowPage})}">Next</a>
+                        <a class="page-link" href="#" th:href="@{/posts(page=${posts.nowPage})}">Next</a>
                 </li>
             </ul>
         </nav>
         <div class="text-end">
-            <a type="button" class="btn btn-primary" th:href="@{/board/write}">Write</a>
+            <a type="button" class="btn btn-primary" th:href="@{/posts/write}">Write</a>
         </div>
     </div>
 </main>

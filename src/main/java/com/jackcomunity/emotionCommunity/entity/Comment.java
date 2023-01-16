@@ -1,5 +1,7 @@
 package com.jackcomunity.emotionCommunity.entity;
 
+import com.jackcomunity.emotionCommunity.request.CommentCreate;
+import com.jackcomunity.emotionCommunity.request.CommentEdit;
 import com.jackcomunity.emotionCommunity.util.Emotion;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,11 +21,11 @@ public class Comment {
     private String content;
     @Enumerated(EnumType.STRING)
     private Emotion emotion;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     @Setter
     private Post post;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @Setter
     private User user;
@@ -34,5 +36,10 @@ public class Comment {
         this.emotion = emotion;
         this.post = post;
         this.user = user;
+    }
+
+    public void edit(CommentEdit commentEdit){
+        this.content = commentEdit.getContent();
+        this.emotion = commentEdit.getEmotion();
     }
 }
