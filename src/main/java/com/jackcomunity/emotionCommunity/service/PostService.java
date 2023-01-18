@@ -2,22 +2,28 @@ package com.jackcomunity.emotionCommunity.service;
 
 import com.jackcomunity.emotionCommunity.entity.Post;
 import com.jackcomunity.emotionCommunity.entity.User;
+import com.jackcomunity.emotionCommunity.repository.CommentRepository;
 import com.jackcomunity.emotionCommunity.repository.PostRepository;
 import com.jackcomunity.emotionCommunity.repository.UserRepository;
 import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
+import com.jackcomunity.emotionCommunity.response.CommentResponse;
 import com.jackcomunity.emotionCommunity.response.PostResponse;
+import com.jackcomunity.emotionCommunity.util.Emotion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.jackcomunity.emotionCommunity.util.Emotion.*;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public void write(PostCreate postCreate, String username) {
@@ -41,6 +47,21 @@ public class PostService {
         return PostResponse.builder()
                 .post(post)
                 .build();
+    }
+    public PostResponse getWithEmotion(Long id, Emotion emotion) {
+        Post post = postRepository.findById(id).orElseThrow();
+        PostResponse postResponse = PostResponse.builder()
+                .post(post)
+                .build();
+        if(emotion.equals(POSITIVE)){
+            postResponse.getCommentResponses().removeIf(comment -> !comment.getEmotion().equals(POSITIVE));
+
+        }
+        if(emotion.equals(NEUTRAL)){
+            postResponse.getCommentResponses().removeIf(comment -> comment.getEmotion().equals(NEGATIVE));
+        }
+        return postResponse;
+
     }
 
     @Transactional

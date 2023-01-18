@@ -35,6 +35,8 @@
 - [x] User, Post 컨비니언스 메소드 생성 
 - [x] JPA AUDITING extends 추가
 - [x] nickname, email field 추가
+- [ ] 댓글 필터를 위한 Emotion field 추가 및 필터 설정
+  - 
 
 ### Security
 - [x] webSecurity config 설정

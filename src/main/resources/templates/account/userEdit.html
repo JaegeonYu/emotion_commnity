@@ -1,0 +1,84 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:justify-content="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../../static/css/bootstrap.min.css"
+          rel="stylesheet">
+    <title>Emotion Community</title>
+    <link th:href="@{/css/signin.css}"
+            href="signin.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+</head>
+<body class="text-center">
+<div th:replace="fragments/common :: menu">
+</div>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+    function modifyUser() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        const commentBean = {
+            email : $("#email").val(),
+            username: $("#username").val(),
+            password: $("#inputPassword").val(),
+            nickname: $("#nickname").val(),
+            emotion: $("#emotion").val()
+        };
+        $.ajax({
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header,token);
+                },
+                url: "/account/modify",
+                type: "PUT",
+                data: JSON.stringify(commentBean),
+                contentType: 'application/json; charset=utf-8'
+            }).done(function (response){
+                alert("회원 수정 완료"+response);
+                window.location.href="/posts";
+        }).fail((error)=>{
+            if(error.status === 500){
+                alert("이미 사용중인 닉네임");
+            }else{
+                alert(JSON.stringify(error));
+            }
+        })
+    }
+
+    /*]]>*/
+
+</script>
+<form class="form-signin" method="post" th:action="@{/account/edit}">
+
+    <img class="mb-4" src="https://cdn-icons-png.flaticon.com/128/817/817787.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}" class="alert alert-warning" role="alert">
+        You have been logged out.
+    </div>
+    <label for="nickname" class="sr-only">아이디</label>
+    <input type="text" id="username" name="username" class="form-control" placeholder="userid" th:value="${#authentication.name}" readonly required autofocus>
+    <label for="nickname" class="sr-only">이메일</label>
+    <input type="text" id="email" name="email" class="form-control" placeholder="email" th:value="${email}" readonly required autofocus>
+    <label for="nickname" class="sr-only">닉네임</label>
+    <input type="text" id="nickname" name="nickname" class="form-control" placeholder="nickname" th:value="${nickname}" required autofocus>
+    <label for="inputPassword" class="sr-only">비밀번호</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+<!--    <div class="checkbox mb-3">-->
+<!--        <label>-->
+<!--            <input type="checkbox" value="remember-me"> Remember me-->
+<!--        </label>-->
+<!--    </div>-->
+    <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn-modify-user" >Edit</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2022</p>
+</form>
+
+</body>
+</html>

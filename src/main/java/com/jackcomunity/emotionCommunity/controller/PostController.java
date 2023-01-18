@@ -33,6 +33,7 @@ public class PostController {
         model.addAttribute("posts", postPageResponse);
         if(userDetails != null){
             model.addAttribute("nickname", userDetails.getNickname());
+            model.addAttribute("emotion", userDetails.getEmotion());
         }
 
         return "post/posts";
@@ -40,16 +41,22 @@ public class PostController {
 
     @GetMapping("/posts/read/{postId}")
     public String get(@PathVariable Long postId, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        PostResponse postResponse = postService.get(postId);
-
-        List<CommentResponse> comments = postResponse.getCommentResponses();
-        if (!comments.isEmpty()) {
-            model.addAttribute("comments", comments);
-        }
         if(userDetails != null){
+            PostResponse postResponse = postService.getWithEmotion(postId, userDetails.getEmotion());
+            if(postResponse.getCommentResponses()!= null){
+                model.addAttribute("comments", postResponse.getCommentResponses());
+            }
             model.addAttribute("nickname", userDetails.getNickname());
+            model.addAttribute("emotion", userDetails.getEmotion());
+            model.addAttribute("post",postResponse);
         }
-        model.addAttribute("post", postResponse);
+        if(userDetails == null){
+            PostResponse postResponse = postService.get(postId);
+            if(postResponse.getCommentResponses()!=null){
+                model.addAttribute("comments", postResponse.getCommentResponses());
+            }
+            model.addAttribute("post",postResponse);
+        }
         return "post/postView";
     }
 
@@ -62,6 +69,7 @@ public class PostController {
         model.addAttribute("searchText", searchText);
         if(userDetails != null){
             model.addAttribute("nickname", userDetails.getNickname());
+            model.addAttribute("emotion", userDetails.getEmotion());
         }
         return "post/postSearch";
     }
@@ -71,6 +79,7 @@ public class PostController {
     public String addForm(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         if(userDetails != null){
             model.addAttribute("nickname", userDetails.getNickname());
+            model.addAttribute("emotion", userDetails.getEmotion());
         }
         return "post/postForm";
     }
@@ -88,6 +97,7 @@ public class PostController {
         model.addAttribute("editPost", postResponse);
         if(userDetails != null){
             model.addAttribute("nickname", userDetails.getNickname());
+            model.addAttribute("emotion", userDetails.getEmotion());
         }
         if(userDetails.getUsername() != postResponse.getUsername()) return "/account/login"; // 작성자가 아니라는 페이지
         return "/post/postEdit";

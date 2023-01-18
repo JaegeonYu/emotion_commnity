@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:justify-content="http://www.w3.org/1999/xhtml">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../../static/css/bootstrap.min.css"
+        rel="stylesheet">
+  <title>Emotion Community</title>
+  <link th:href="@{/css/signin.css}"
+        href="signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+<div th:replace="fragments/common :: menu">
+</div>
+<form class="form-signin" method="post" th:action="@{/account/emotion}">
+
+  <img class="mb-4" src="https://cdn-icons-png.flaticon.com/128/817/817787.png" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Emotion Filter Change</h1>
+  <div th:if="${param.error}" class="alert alert-danger" role="alert">
+    Invalid username and password.
+  </div>
+  <select name="emotion" id="emotion">
+    <option th:each="emotion : ${T(com.jackcomunity.emotionCommunity.util.Emotion).values()}"
+            th:value="${emotion}" th:text="${emotion}"></option>
+  </select>
+  <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+  <input type="hidden" name="username" th:value="${#authentication.name}"></input>
+  <!--    <div class="checkbox mb-3">-->
+  <!--        <label>-->
+  <!--            <input type="checkbox" value="remember-me"> Remember me-->
+  <!--        </label>-->
+  <!--    </div>-->
+  <button class="btn btn-lg btn-primary btn-block" type="submit" id="btn-modify-user" >변경</button>
+  <p class="mt-5 mb-3 text-muted">&copy; 2017-2022</p>
+</form>
+
+</body>
+</html>

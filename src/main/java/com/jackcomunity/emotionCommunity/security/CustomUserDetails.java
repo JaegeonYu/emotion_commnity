@@ -1,6 +1,7 @@
 package com.jackcomunity.emotionCommunity.security;
 
 import com.jackcomunity.emotionCommunity.entity.User;
+import com.jackcomunity.emotionCommunity.util.Emotion;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +37,17 @@ public class CustomUserDetails implements UserDetails {
         return user.getUsername();
     }
 
-    public String getNickname(){return user.getNickname();}
+    public String getNickname() {
+        return user.getNickname();
+    }
+
+    public Emotion getEmotion() {
+        return user.getEmotion();
+    }
+
+    public String getEmail() {
+        return user.getEmail();
+    }
 
     @Override
     public boolean isAccountNonExpired() {

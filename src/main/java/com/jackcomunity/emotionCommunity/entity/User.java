@@ -1,5 +1,7 @@
 package com.jackcomunity.emotionCommunity.entity;
 
+import com.jackcomunity.emotionCommunity.request.UserEdit;
+import com.jackcomunity.emotionCommunity.util.Emotion;
 import com.jackcomunity.emotionCommunity.util.Roles;
 import com.jackcomunity.emotionCommunity.util.TimeEntity;
 import lombok.Builder;
@@ -29,21 +31,31 @@ public class User extends TimeEntity {
 
     @Enumerated(EnumType.STRING)
     private Roles role;
+    @Enumerated(EnumType.STRING)
+    private Emotion emotion;
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public User(String username, String nickname, String email, String password, Roles role) {
+    public User(String username, String nickname, String email, String password, Roles role, Emotion emotion) {
         this.username = username;
         this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.emotion = emotion;
 
     }
-
+    public void edit(String nickname, Emotion emotion, String password){
+        this.emotion = emotion;
+        this.nickname = nickname;
+        this.password = password;
+    }
+    public void edit(Emotion emotion){
+        this.emotion = emotion;
+    }
 
     public void addComment(Comment comment) {
         comment.setUser(this);

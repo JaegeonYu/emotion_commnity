@@ -20,27 +20,30 @@
     <li class="list-group-item" th:if="${#lists.isEmpty(comments)}">
         <p> 댓글이 존재하지않습니다.</p>
     </li>
-    <ul class="list-group list-group-flush" th:if="${comments != null}">
-        <li class="list-group-item" th:each="comment :${comments}">
-        <span>
-                <span style="font-size: small" th:text="${comment.nickname}"></span>
-                <div th:if="${#authentication.name}==${comment.username}">
-                    <form th:action="@{|/posts/${post.id}/comments/${comment.id}|}" th:method="get">
-                        <button class="badge text-bg-dark">수정</button>
-                    </form>
-                    <form th:action="@{|/posts/${post.id}/comments/${comment.id}|}" th:method="delete">
-                            <button class="badge text-bg-dark">삭제</button>
-                    </form>
-                </div>
-        </span>
-            <div th:text="${comment.content}"></div>
-            <td th:switch="${#strings.toString(comment.emotion)}">
-                <span th:case="POSITIVE" th:text="긍정" class="badge rounded-pill text-bg-success"/>
-                <span th:case="NEUTRAL" th:text="중립" class="badge rounded-pill text-bg-secondary"/>
-                <span th:case="NEGATIVE" th:text="부정" class="badge rounded-pill text-bg-danger"/>
-            </td>
-        </li>
-    </ul>
+
+            <ul class="list-group list-group-flush" th:if="${comments != null}">
+                <li class="list-group-item" th:each="comment :${comments}">
+
+                <span>
+                        <span style="font-size: small" th:text="${comment.nickname}"></span>
+                        <div th:if="${#authentication.name}==${comment.username}">
+                            <form th:action="@{|/posts/${post.id}/comments/${comment.id}|}" th:method="get">
+                                <button class="badge text-bg-dark">수정</button>
+                            </form>
+                            <form th:action="@{|/posts/${post.id}/comments/${comment.id}|}" th:method="delete">
+                                    <button class="badge text-bg-dark">삭제</button>
+                            </form>
+                        </div>
+                </span>
+                        <div th:text="${comment.content}"></div>
+                        <td th:switch="${#strings.toString(comment.emotion)}">
+                            <span th:case="POSITIVE" th:text="긍정" class="badge rounded-pill text-bg-success"/>
+                            <span th:case="NEUTRAL" th:text="중립" class="badge rounded-pill text-bg-secondary"/>
+                            <span th:case="NEGATIVE" th:text="부정" class="badge rounded-pill text-bg-danger"/>
+                        </td>
+
+                </li>
+            </ul>
 
 </div>
 <div class="card" th:fragment="commentForm">

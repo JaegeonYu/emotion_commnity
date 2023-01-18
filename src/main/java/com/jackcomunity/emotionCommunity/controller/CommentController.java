@@ -42,15 +42,22 @@ public class CommentController {
     @GetMapping("/posts/{postId}/comments/{commentId}")
     public String editForm(@PathVariable Long postId, @PathVariable Long commentId, Model model,
                            @AuthenticationPrincipal CustomUserDetails userDetails) {
-        PostResponse postResponse = postService.get(postId);
-        List<CommentResponse> comments = postResponse.getCommentResponses();
-        if (!comments.isEmpty()) {
-            model.addAttribute("comments", comments);
-        }
-        if (userDetails != null) {
+        if(userDetails != null){
+            PostResponse postResponse = postService.getWithEmotion(postId, userDetails.getEmotion());
+            if(postResponse.getCommentResponses()!= null){
+                model.addAttribute("comments", postResponse.getCommentResponses());
+            }
             model.addAttribute("nickname", userDetails.getNickname());
+            model.addAttribute("emotion", userDetails.getEmotion());
+            model.addAttribute("post",postResponse);
         }
-        model.addAttribute("post", postResponse);
+        if(userDetails == null){
+            PostResponse postResponse = postService.get(postId);
+            if(postResponse.getCommentResponses()!=null){
+                model.addAttribute("comments", postResponse.getCommentResponses());
+            }
+            model.addAttribute("post",postResponse);
+        }
         model.addAttribute("editCommentId", commentId);
         return "post/postCommentEdit";
     }
