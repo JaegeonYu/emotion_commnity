@@ -1,21 +1,21 @@
 package com.jackcomunity.emotionCommunity.controller;
 
 import com.jackcomunity.emotionCommunity.request.EmotionEdit;
+import com.jackcomunity.emotionCommunity.request.UserCheck;
 import com.jackcomunity.emotionCommunity.request.UserEdit;
 import com.jackcomunity.emotionCommunity.request.UserCreate;
 import com.jackcomunity.emotionCommunity.security.CustomUserDetails;
 import com.jackcomunity.emotionCommunity.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,40 +34,42 @@ public class AccountController {
     }
 
     @GetMapping("/signup")
-    public String signupForm() {
+    public String signupForm(Model model) {
+        model.addAttribute("userCreate", new UserCreate());
         return "account/signup";
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid UserCreate user) {
+    public String signup(@Valid UserCreate user, BindingResult result, Model model) {
+        userService.checkDuplicateSignup(new UserCheck(user), result);
+
+        if(result.hasErrors()){
+            model.addAttribute("userCreate", user);
+            return "account/signup";
+        }
+
         userService.save(user);
         return "redirect:/account/login";
     }
 
     @GetMapping("/edit")
-    public String emotionForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        model.addAttribute("nickname", customUserDetails.getNickname());
-        model.addAttribute("email", customUserDetails.getEmail());
+    public String emotionForm(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        model.addAttribute("nickname", userDetails.getNickname());
+        model.addAttribute("emotion", userDetails.getEmotion());
+        model.addAttribute("userEdit", UserEdit.builder().username(userDetails.getUsername())
+                .email(userDetails.getEmail())
+                .nickname(userDetails.getNickname()).build());
         return "account/userEdit";
     }
 
-//    @PutMapping("/modify")
-//    @ResponseBody
-//    public ResponseEntity<String> emotionEdit(@RequestBody UserEdit userEdit) {
-//        System.out.println(userEdit);
-//
-////
-//        userService.modify(userEdit);
-//        System.out.println("next modify ==========================");
-//        System.out.println(userEdit.getPassword());
-//        Authentication authenticate = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(userEdit.getUsername(), userEdit.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authenticate);
-//        System.out.println("next context ===================");
-//        return new ResponseEntity("success" , HttpStatus.OK);
-//    }
     @PostMapping("/edit")
-    public String userEdit(UserEdit userEdit) {
+    public String userEdit(@Valid UserEdit userEdit, BindingResult result, Model model) {
+        userService.checkDuplicateEdit(new UserCheck(userEdit), result);
+
+        if(result.hasErrors()){
+            model.addAttribute("userEdit", userEdit);
+            return "account/userEdit";
+        }
         userService.edit(userEdit);
         updateAuthToken(userEdit.getUsername(), userEdit.getPassword());
 

@@ -2,17 +2,16 @@ package com.jackcomunity.emotionCommunity.request;
 
 import com.jackcomunity.emotionCommunity.entity.Post;
 import com.jackcomunity.emotionCommunity.entity.User;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
+@NoArgsConstructor
 public class PostCreate {
     @NotBlank
     private String title;
+    @NotBlank
     private String content;
     private User user;
 

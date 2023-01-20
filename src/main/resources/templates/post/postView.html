@@ -32,8 +32,14 @@
     <div th:replace="fragments/comment :: commentForm"></div>
 
     <div class="text-end" th:if="${#authentication.name}==${post.username}">
-        <a th:href="@{|/posts/edit/${post.getId()}|}"  class="btn btn-primary">수정</a>
-        <a th:href="@{|/posts/delete/${post.getId()}|}" class="btn btn-danger">삭제</a>
+      <form th:method="get" th:action="@{|/posts/edit/${post.getId()}|}">
+        <button type="submit" class="btn btn-primary">수정</button>
+      </form>
+
+      <form th:method="delete" th:action="@{|/posts/${post.getId()}|}">
+        <button class="btn btn-danger">삭제</button>
+      </form>
+
       </div>
   </div>
 

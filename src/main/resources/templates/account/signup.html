@@ -11,38 +11,45 @@
     <link th:href="@{/css/signin.css}"
             href="signin.css" rel="stylesheet">
 </head>
+<style>
+    p{
+        font-size: 2px;
+        font-weight: bold;
+        color: #b02a37;
+    }
+    .fieldError{
+        border-color: #bd2130;
+    }
+</style>
 <body class="text-center">
 <div th:replace="fragments/common :: menu">
 </div>
 
-<form class="form-signin" th:action="@{/account/signup}" method="post">
+<form class="form-signin" th:action="@{|/account/signup|}" method="post" th:object="${userCreate}">
     <img class="mb-4" src="https://cdn-icons-png.flaticon.com/128/817/817787.png" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
-    <div th:if="${param.error}" class="alert alert-danger" role="alert">
-        Invalid username and password.
-    </div>
-    <div th:if="${param.logout}" class="alert alert-warning" role="alert">
-        You have been logged out.
-    </div>
-    <label for="username" class="sr-only">아이디</label>
-    <input type="text" id="username" name="username" class="form-control" placeholder="username" required autofocus>
-    <label for="email" class="sr-only">이메일</label>
-    <input type="email" id="email" name="email" class="form-control" placeholder="email" required autofocus>
-    <label for="nickname" class="sr-only">닉네임</label>
-    <input type="text" id="nickname" name="nickname" class="form-control" placeholder="nickname" required autofocus>
-    <label for="inputPassword" class="sr-only">비밀번호</label>
-    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-<!--    <div class="checkbox mb-3">-->
-<!--        <label>-->
-<!--            <input type="checkbox" value="remember-me"> Remember me-->
-<!--        </label>-->
-<!--    </div>-->
+    <label th:for="username" class="sr-only">아이디</label>
+
+    <input type="text" th:field="*{username}" class="form-control fieldError" placeholder="username"
+               th:class="${#fields.hasErrors('username')} ? 'form-control fieldError' : 'form-control'" >
+    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+
+    <label th:for="email" class="sr-only">이메일</label>
+    <input type="email" th:field="*{email}" class="form-control fieldError" placeholder="email"
+           th:class="${#fields.hasErrors('email')} ? 'form-control fieldError' : 'form-control'" >
+    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+
+    <label th:for="nickname" class="sr-only">닉네임</label>
+    <input type="text" th:field="*{nickname}" class="form-control" placeholder="nickname"
+           th:class="${#fields.hasErrors('nickname')} ? 'form-control fieldError' : 'form-control'" >
+    <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="fieldError"></p>
+    <label th:for="password" class="sr-only">비밀번호</label>
+    <input type="password" th:field="*{password}" class="form-control" placeholder="Password"
+           th:class="${#fields.hasErrors('password')} ? 'form-control fieldError' : 'form-control'" required>
+    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+
     <button class="btn btn-lg btn-primary btn-block" type="submit">회원가입</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2017-2022</p>
 </form>
-
-
-
-
 </body>
 </html>

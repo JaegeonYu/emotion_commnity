@@ -21,7 +21,8 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()).
                 formLogin((form)->form
                         .loginPage("/account/login").permitAll()
-                        .defaultSuccessUrl("/posts"))
+                        .defaultSuccessUrl("/posts")
+                            .failureUrl("/account/login?error"))
                 .logout().permitAll()
                 .logoutSuccessUrl("/posts");
 

@@ -12,6 +12,16 @@
         href="../../static/css/sticky-footer-navbar.css" rel="stylesheet">
 
 </head>
+<style>
+  p{
+    font-size: 2px;
+    font-weight: bold;
+    color: #b02a37;
+  }
+  .fieldError{
+    border-color: #bd2130;
+  }
+</style>
 <body>
 <div th:replace="fragments/common :: menu">
 </div>
@@ -19,14 +29,18 @@
 <main class="flex-shrink-0">
   <div class="container">
     <h2 class="mt-5">게시물 수정</h2>
-    <form th:action="@{|/posts/edit/${editPost.getId()}|}" th:method="put">
+    <form th:action="@{|/posts/${postId}|}" th:method="put" th:object="${postEdit}">
       <div class="form-group">
-        <label for="title">제목</label>
-        <input type="text" class="form-control" id="title" name="title" th:value="${editPost.title}">
+        <label th:for="title">제목</label>
+        <input type="text" class="form-control" th:field="*{title}" th:value="${postEdit.title}"
+               th:class="${#fields.hasErrors('title')} ? 'form-control fieldError' : 'form-control'">
+        <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
       </div>
       <div class="form-group">
-        <label for="content">내용</label>
-        <textarea class="form-control" id="content" rows="3" name="content" th:text="${editPost.content}"></textarea>
+        <label th:for="content">내용</label>
+        <textarea class="form-control"  rows="3" th:field="*{content}" th:text="${postEdit.content}"
+                  th:class="${#fields.hasErrors('content')} ? 'form-control fieldError' : 'form-control'"></textarea>
+        <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
       </div>
       <div class="text-end">
         <button type="submit" class="btn btn-primary">글쓰기</button>

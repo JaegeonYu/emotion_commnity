@@ -45,19 +45,19 @@ public class CommentService {
         commentRepository.save(comment);
     };
 
-    public Long ajaxCreate(CommentAjaxCreate commentCreate, Long postId){
-        Emotion emotion = emotionDiscrimination(commentCreate.getContent());
-        commentCreate.setEmotion(emotion);
-        User user = userRepository.findByUsername(commentCreate.getUsername()).orElseThrow();
-        Post post = postRepository.findById(postId).orElseThrow();
-        commentCreate.setUser(user);
-        commentCreate.setPost(post);
-
-        Comment comment = commentCreate.toEntity();
-        commentRepository.save(comment);
-
-        return comment.getId();
-    }
+//    public Long ajaxCreate(CommentAjaxCreate commentCreate, Long postId){
+//        Emotion emotion = emotionDiscrimination(commentCreate.getContent());
+//        commentCreate.setEmotion(emotion);
+//        User user = userRepository.findByUsername(commentCreate.getUsername()).orElseThrow();
+//        Post post = postRepository.findById(postId).orElseThrow();
+//        commentCreate.setUser(user);
+//        commentCreate.setPost(post);
+//
+//        Comment comment = commentCreate.toEntity();
+//        commentRepository.save(comment);
+//
+//        return comment.getId();
+//    }
 
     public List<CommentResponse> getList(Long postId){
         return postRepository.findById(postId).orElseThrow().getComments().stream().map(CommentResponse::new).collect(Collectors.toList());

@@ -6,12 +6,14 @@ import com.jackcomunity.emotionCommunity.util.Roles;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
+@NoArgsConstructor
 public class UserCreate {
 
     @NotBlank(message = "아이디는 필수 입력값입니다.")
