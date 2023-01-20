@@ -2,7 +2,6 @@ package com.jackcomunity.emotionCommunity.controller;
 
 import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
-import com.jackcomunity.emotionCommunity.response.CommentResponse;
 import com.jackcomunity.emotionCommunity.response.PageDto;
 import com.jackcomunity.emotionCommunity.response.PostResponse;
 import com.jackcomunity.emotionCommunity.security.CustomUserDetails;
@@ -16,9 +15,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,8 +32,7 @@ public class PostController {
         PageDto<PostResponse> postPageResponse = PageDto.of(posts);
         model.addAttribute("posts", postPageResponse);
         if(userDetails != null){
-            model.addAttribute("nickname", userDetails.getNickname());
-            model.addAttribute("emotion", userDetails.getEmotion());
+            existsSession(model, userDetails);
         }
 
         return "post/posts";
@@ -46,8 +45,7 @@ public class PostController {
             if(postResponse.getCommentResponses()!= null){
                 model.addAttribute("comments", postResponse.getCommentResponses());
             }
-            model.addAttribute("nickname", userDetails.getNickname());
-            model.addAttribute("emotion", userDetails.getEmotion());
+            existsSession(model, userDetails);
             model.addAttribute("post",postResponse);
         }
         if(userDetails == null){
@@ -68,8 +66,7 @@ public class PostController {
         model.addAttribute("posts", searchPageResponse);
         model.addAttribute("searchText", searchText);
         if(userDetails != null){
-            model.addAttribute("nickname", userDetails.getNickname());
-            model.addAttribute("emotion", userDetails.getEmotion());
+            existsSession(model, userDetails);
         }
         return "post/postSearch";
     }
@@ -78,33 +75,41 @@ public class PostController {
     @GetMapping("/posts/write")
     public String addForm(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         if(userDetails != null){
-            model.addAttribute("nickname", userDetails.getNickname());
-            model.addAttribute("emotion", userDetails.getEmotion());
+            existsSession(model, userDetails);
         }
+        model.addAttribute("postCreate", new PostCreate());
         return "post/postForm";
     }
 
     @PostMapping("/posts")
-    public String create(PostCreate postCreate, Authentication authentication, Model model) {
-        String username = authentication.getName();
+    public String create(@Valid PostCreate postCreate, BindingResult result, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if(result.hasErrors()){
+            existsSession(model, userDetails);
+            return "post/postForm";
+        }
+        String username = userDetails.getUsername();
         postService.write(postCreate, username);
         return "redirect:/posts";
     }
 
     @GetMapping("/posts/edit/{postId}")
     public String edit(@PathVariable Long postId, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        PostResponse postResponse = postService.get(postId);
-        model.addAttribute("editPost", postResponse);
+        PostResponse post = postService.get(postId);
         if(userDetails != null){
-            model.addAttribute("nickname", userDetails.getNickname());
-            model.addAttribute("emotion", userDetails.getEmotion());
+            existsSession(model, userDetails);
         }
-        if(userDetails.getUsername() != postResponse.getUsername()) return "/account/login"; // 작성자가 아니라는 페이지
-        return "/post/postEdit";
+        if(!userDetails.getUsername().equals(post.getUsername())) return "/account/login"; // 작성자가 아니라는 페이지
+        model.addAttribute("postEdit", new PostEdit(post.getTitle(), post.getContent()));
+        model.addAttribute("postId", postId);
+        return "post/postEdit";
     }
 
     @PutMapping("/posts/{postId}")
-    public String editSave(@PathVariable Long postId, PostEdit postEdit) {
+    public String editSave(@PathVariable Long postId, @Valid PostEdit postEdit, BindingResult result, Model model) {
+        if(result.hasErrors()){
+            model.addAttribute("postEdit", postEdit);
+            return "post/postEdit";
+        }
         postService.edit(postId, postEdit);
         return "redirect:/posts";
     }
@@ -113,5 +118,9 @@ public class PostController {
     public String delete(@PathVariable Long postId) {
         postService.delete(postId);
         return "redirect:/posts";
+    }
+    private void existsSession(Model model, CustomUserDetails user){
+        model.addAttribute("nickname", user.getNickname());
+        model.addAttribute("emotion", user.getEmotion());
     }
 }

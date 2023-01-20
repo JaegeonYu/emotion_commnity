@@ -48,8 +48,7 @@ public class User extends TimeEntity {
         this.emotion = emotion;
 
     }
-    public void edit(String nickname, Emotion emotion, String password){
-        this.emotion = emotion;
+    public void edit(String nickname, String password){
         this.nickname = nickname;
         this.password = password;
     }

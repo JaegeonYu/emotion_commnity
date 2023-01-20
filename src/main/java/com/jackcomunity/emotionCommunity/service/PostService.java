@@ -7,7 +7,6 @@ import com.jackcomunity.emotionCommunity.repository.PostRepository;
 import com.jackcomunity.emotionCommunity.repository.UserRepository;
 import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
-import com.jackcomunity.emotionCommunity.response.CommentResponse;
 import com.jackcomunity.emotionCommunity.response.PostResponse;
 import com.jackcomunity.emotionCommunity.util.Emotion;
 import lombok.RequiredArgsConstructor;
