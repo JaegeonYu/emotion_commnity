@@ -1,11 +1,9 @@
 package com.jackcomunity.emotionCommunity.entity;
 
 import com.jackcomunity.emotionCommunity.request.PostEdit;
-import com.jackcomunity.emotionCommunity.util.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;

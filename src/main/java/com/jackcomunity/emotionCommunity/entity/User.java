@@ -1,9 +1,7 @@
 package com.jackcomunity.emotionCommunity.entity;
 
-import com.jackcomunity.emotionCommunity.request.UserEdit;
 import com.jackcomunity.emotionCommunity.util.Emotion;
 import com.jackcomunity.emotionCommunity.util.Roles;
-import com.jackcomunity.emotionCommunity.util.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

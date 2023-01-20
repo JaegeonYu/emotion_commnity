@@ -4,10 +4,8 @@
 - [x] Repository, Service, Controller, Entity 생성
 - [x] Controller Thymeleaf mapping
 - [x] RequestDTO, ResponseDTO 생성
-- [ ] Post Create 작성 및 테스트
+- [x] Post Create 작성 및 테스트
   - [x] PostService write
-  - [ ] Post RequestDTO @NotBlank, Controller @Valid
-  - [ ] Binding Result + thymeleaft로 Exception Controll
   - [x] Service Test
   - [x] Thymeleaf Mapping
   - [x] Spring Security Authentication 이용한 username 넘기기
@@ -27,13 +25,12 @@
   - [x] Thymeleaf Mapping
   - [x] Service Test
 - [x] 작성자만 Post Delete, Update button 접근제어
-  - [x] Thymeleaf Security가 관리하는 세션의 유저이름 Post model 속의 유저이름이 같을 때 접근가능
+  - [x] Thymeleaf Security Authentication.username == Post.username 접근 가능
 - [x] JPA AUDITING extends 추가
 
 ### User
 - [x] Entity 생성
 - [x] Post <-> User 연관관계 mapping
-- [x] User, Post 컨비니언스 메소드 생성 
 - [x] JPA AUDITING extends 추가
 - [x] nickname, email field 추가
 - [x] 댓글 필터를 위한 Emotion field 추가 및 필터 설정
@@ -93,10 +90,11 @@
 
 
 ### 예외처리
-- [ ] 회원 가입 필드 유효성 검사
-- [ ] 회원 가입 중복 검사
-- [ ] 로그인 오류
-- [ ] 글이 없을 때
-- [ ] 사용자가 없을 때
-- [ ] 댓글이 없을 때
-- [ ] 권한이 없을 때
+- [x] 회원 가입 필드 유효성 검사
+  - [x] @Pattern, @NotBlank + @Valid 유효성 검사
+- [x] 회원 가입 중복 검사
+  - [x] JPA Repository(existsQuery) + BindingResult addFiledError
+- [x] 로그인 오류
+  - [x] Spring Security LoginFailure Handler + Thymeleaf
+- [ ] 해당 글,사용자, 댓글, 권한이 없을 때
+  - [ ] Abstract Exception + Controller Advice 

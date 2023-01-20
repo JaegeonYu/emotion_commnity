@@ -1,4 +1,4 @@
-package com.jackcomunity.emotionCommunity.util;
+package com.jackcomunity.emotionCommunity.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
