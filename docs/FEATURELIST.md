@@ -17,6 +17,7 @@
   - [x] PostService get
   - [x] Service Test
   - [x] Thymeleaf Mapping
+  - [x] PostService User Emotion Filter 추가
 - [x] Post Edit 작성 및 테스트
   - [x] PostService edit
   - [x] Thymeleaf Mapping
@@ -35,8 +36,10 @@
 - [x] User, Post 컨비니언스 메소드 생성 
 - [x] JPA AUDITING extends 추가
 - [x] nickname, email field 추가
-- [ ] 댓글 필터를 위한 Emotion field 추가 및 필터 설정
-  - 
+- [x] 댓글 필터를 위한 Emotion field 추가 및 필터 설정
+  - [x] Emotion 필드 추가
+  - [x] 사용자 정보 변경 추가
+  - [x] Emotion 변경 추가
 
 ### Security
 - [x] webSecurity config 설정
@@ -87,3 +90,13 @@
 - [ ] 비동기로 변경 후 새로고침 없이 댓글 컨트롤
 ### DB
 -[x] MySQL 연결을 위한 application.yml 세팅
+
+
+### 예외처리
+- [ ] 회원 가입 필드 유효성 검사
+- [ ] 회원 가입 중복 검사
+- [ ] 로그인 오류
+- [ ] 글이 없을 때
+- [ ] 사용자가 없을 때
+- [ ] 댓글이 없을 때
+- [ ] 권한이 없을 때
