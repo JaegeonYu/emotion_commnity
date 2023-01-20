@@ -1,5 +1,6 @@
 package com.jackcomunity.emotionCommunity.controller;
 
+import com.jackcomunity.emotionCommunity.exception.Unauthorized;
 import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
 import com.jackcomunity.emotionCommunity.response.PageDto;
@@ -98,7 +99,7 @@ public class PostController {
         if(userDetails != null){
             existsSession(model, userDetails);
         }
-        if(!userDetails.getUsername().equals(post.getUsername())) return "/account/login"; // 작성자가 아니라는 페이지
+        if(!userDetails.getUsername().equals(post.getUsername()))new Unauthorized();
         model.addAttribute("postEdit", new PostEdit(post.getTitle(), post.getContent()));
         model.addAttribute("postId", postId);
         return "post/postEdit";

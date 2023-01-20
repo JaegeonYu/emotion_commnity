@@ -2,6 +2,7 @@ package com.jackcomunity.emotionCommunity.service;
 
 import com.jackcomunity.emotionCommunity.entity.Post;
 import com.jackcomunity.emotionCommunity.entity.User;
+import com.jackcomunity.emotionCommunity.exception.PostNotFound;
 import com.jackcomunity.emotionCommunity.repository.CommentRepository;
 import com.jackcomunity.emotionCommunity.repository.PostRepository;
 import com.jackcomunity.emotionCommunity.repository.UserRepository;
@@ -22,7 +23,7 @@ import static com.jackcomunity.emotionCommunity.util.Emotion.*;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final CommentRepository commentRepository;
+
 
     @Transactional
     public void write(PostCreate postCreate, String username) {
@@ -42,21 +43,22 @@ public class PostService {
     }
 
     public PostResponse get(Long id) {
-        Post post = postRepository.findById(id).orElseThrow();
+        Post post = postRepository.findById(id).orElseThrow(PostNotFound::new);
         return PostResponse.builder()
                 .post(post)
                 .build();
     }
+
     public PostResponse getWithEmotion(Long id, Emotion emotion) {
-        Post post = postRepository.findById(id).orElseThrow();
+        Post post = postRepository.findById(id).orElseThrow(PostNotFound::new);
         PostResponse postResponse = PostResponse.builder()
                 .post(post)
                 .build();
-        if(emotion.equals(POSITIVE)){
+        if (emotion.equals(POSITIVE)) {
             postResponse.getCommentResponses().removeIf(comment -> !comment.getEmotion().equals(POSITIVE));
 
         }
-        if(emotion.equals(NEUTRAL)){
+        if (emotion.equals(NEUTRAL)) {
             postResponse.getCommentResponses().removeIf(comment -> comment.getEmotion().equals(NEGATIVE));
         }
         return postResponse;
@@ -66,11 +68,12 @@ public class PostService {
     @Transactional
     public void edit(Long postId, PostEdit postEdit) {
         Post post = postRepository.findById(postId)
-                .orElseThrow();
+                .orElseThrow(PostNotFound::new);
         post.edit(postEdit);
     }
 
     public void delete(Long postId) {
-        postRepository.deleteById(postId);
+        Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
+        postRepository.delete(post);
     }
 }

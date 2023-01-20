@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jackcomunity.emotionCommunity.entity.Comment;
 import com.jackcomunity.emotionCommunity.entity.Post;
 import com.jackcomunity.emotionCommunity.entity.User;
+import com.jackcomunity.emotionCommunity.exception.CommentNotFound;
+import com.jackcomunity.emotionCommunity.exception.PostNotFound;
+import com.jackcomunity.emotionCommunity.exception.UserNotFound;
 import com.jackcomunity.emotionCommunity.request.CommentAjaxCreate;
 import com.jackcomunity.emotionCommunity.request.CommentEdit;
 import com.jackcomunity.emotionCommunity.response.CommentResponse;
@@ -31,19 +34,19 @@ public class CommentService {
     private final TemplateCreate templateCreate;
 
 
-    public void save(CommentCreate commentCreate, String username, Long postId){
+    public void save(CommentCreate commentCreate, String username, Long postId) {
         Emotion emotion = emotionDiscrimination(commentCreate.getContent());
         commentCreate.setEmotion(emotion);
 
         Comment comment = commentCreate.toEntity();
 
-        User user = userRepository.findByUsername(username).orElseThrow();
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
         user.addComment(comment);
-        Post post = postRepository.findById(postId).orElseThrow();
+        Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
         post.addComment(comment);
 
         commentRepository.save(comment);
-    };
+    }
 
 //    public Long ajaxCreate(CommentAjaxCreate commentCreate, Long postId){
 //        Emotion emotion = emotionDiscrimination(commentCreate.getContent());
@@ -59,18 +62,20 @@ public class CommentService {
 //        return comment.getId();
 //    }
 
-    public List<CommentResponse> getList(Long postId){
+    public List<CommentResponse> getList(Long postId) {
         return postRepository.findById(postId).orElseThrow().getComments().stream().map(CommentResponse::new).collect(Collectors.toList());
     }
+
     @Transactional
-    public void edit(CommentEdit commentEdit, Long commentID)  {
+    public void edit(CommentEdit commentEdit, Long commentID) {
         Emotion emotion = emotionDiscrimination(commentEdit.getContent());
         commentEdit.setEmotion(emotion);
-        Comment comment = commentRepository.findById(commentID).orElseThrow();
+        Comment comment = commentRepository.findById(commentID).orElseThrow(CommentNotFound::new);
         comment.edit(commentEdit);
 
     }
-    private Emotion emotionDiscrimination(String content)  {
+
+    private Emotion emotionDiscrimination(String content) {
         EmotionDiscrimination emotionDiscrimination = new EmotionDiscrimination(content);
         Json template;
         try {
@@ -80,9 +85,10 @@ public class CommentService {
         }
         return Emotion.of(template.toString());
     }
+
     @Transactional
-    public void delete(Long commentId){
-        Comment comment = commentRepository.findById(commentId).orElseThrow();
+    public void delete(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFound::new);
         commentRepository.delete(comment);
     }
 }

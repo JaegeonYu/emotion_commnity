@@ -1,5 +1,6 @@
 package com.jackcomunity.emotionCommunity.service;
 
+import com.jackcomunity.emotionCommunity.exception.UserNotFound;
 import com.jackcomunity.emotionCommunity.request.EmotionEdit;
 import com.jackcomunity.emotionCommunity.request.UserCheck;
 import com.jackcomunity.emotionCommunity.request.UserEdit;
@@ -32,16 +33,14 @@ public class UserService {
 
     @Transactional
     public void edit(UserEdit userEdit) {
-        User user = userRepository.findByUsername(userEdit.getUsername()).orElseThrow();
-
-
+        User user = userRepository.findByUsername(userEdit.getUsername()).orElseThrow(UserNotFound::new);
         user.edit(userEdit.getNickname(), passwordEncoder.encode(userEdit.getPassword()));
     }
 
     @Transactional
     public void emotionEdit(EmotionEdit emotionEdit){
         System.out.println(emotionEdit.getUsername());
-        User user = userRepository.findByUsername(emotionEdit.getUsername()).orElseThrow();
+        User user = userRepository.findByUsername(emotionEdit.getUsername()).orElseThrow(UserNotFound::new);
         user.edit(emotionEdit.getEmotion());
     }
     private boolean checkDuplicateUsername(UserCheck user){
