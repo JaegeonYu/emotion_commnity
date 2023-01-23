@@ -6,10 +6,12 @@ import com.jackcomunity.emotionCommunity.entity.Post;
 import com.jackcomunity.emotionCommunity.entity.User;
 import com.jackcomunity.emotionCommunity.exception.CommentNotFound;
 import com.jackcomunity.emotionCommunity.exception.PostNotFound;
+import com.jackcomunity.emotionCommunity.exception.Unauthorized;
 import com.jackcomunity.emotionCommunity.exception.UserNotFound;
 import com.jackcomunity.emotionCommunity.request.CommentAjaxCreate;
 import com.jackcomunity.emotionCommunity.request.CommentEdit;
 import com.jackcomunity.emotionCommunity.response.CommentResponse;
+import com.jackcomunity.emotionCommunity.security.CustomUserDetails;
 import com.jackcomunity.emotionCommunity.util.Emotion;
 import com.jackcomunity.emotionCommunity.repository.CommentRepository;
 import com.jackcomunity.emotionCommunity.repository.PostRepository;
@@ -19,6 +21,7 @@ import com.jackcomunity.emotionCommunity.util.api.EmotionDiscrimination;
 import com.jackcomunity.emotionCommunity.util.api.Json;
 import com.jackcomunity.emotionCommunity.util.api.TemplateCreate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,7 +64,10 @@ public class CommentService {
 //
 //        return comment.getId();
 //    }
-
+    public CommentResponse get(Long commentId){
+        Comment comment = commentRepository.findById(commentId).orElseThrow(CommentNotFound::new);
+        return CommentResponse.builder().comment(comment).build();
+    }
     public List<CommentResponse> getList(Long postId) {
         return postRepository.findById(postId).orElseThrow().getComments().stream().map(CommentResponse::new).collect(Collectors.toList());
     }
@@ -81,7 +87,7 @@ public class CommentService {
         try {
             template = templateCreate.createTemplate(emotionDiscrimination);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // 안 터질 것 같은데 나중에 처리해야할 듯, JSON 파싱 객체 <-> API 반환값 수정 시 터질듯
         }
         return Emotion.of(template.toString());
     }

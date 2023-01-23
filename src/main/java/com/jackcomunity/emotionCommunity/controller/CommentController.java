@@ -1,6 +1,8 @@
 package com.jackcomunity.emotionCommunity.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.jackcomunity.emotionCommunity.exception.Unauthorized;
+import com.jackcomunity.emotionCommunity.repository.CommentRepository;
 import com.jackcomunity.emotionCommunity.request.CommentAjaxCreate;
 import com.jackcomunity.emotionCommunity.request.CommentEdit;
 import com.jackcomunity.emotionCommunity.security.CustomUserDetails;
@@ -25,8 +27,9 @@ public class CommentController {
     private final CommentService commentService;
     private final PostService postService;
 
+
     @PostMapping("/posts/{postId}/comments")
-    public String save(@PathVariable Long postId, CommentCreate commentCreate, Authentication authentication){
+    public String save(@PathVariable Long postId, CommentCreate commentCreate, Authentication authentication) {
 
         commentService.save(commentCreate, authentication.getName(), postId);
         return "redirect:/posts/read/{postId}";
@@ -42,36 +45,42 @@ public class CommentController {
     @GetMapping("/posts/{postId}/comments/{commentId}")
     public String editForm(@PathVariable Long postId, @PathVariable Long commentId, Model model,
                            @AuthenticationPrincipal CustomUserDetails userDetails) {
-        if(userDetails != null){
+        if (userDetails != null) {
             PostResponse postResponse = postService.getWithEmotion(postId, userDetails.getEmotion());
-            if(postResponse.getCommentResponses()!= null){
+            if (postResponse.getCommentResponses() != null) {
                 model.addAttribute("comments", postResponse.getCommentResponses());
             }
             model.addAttribute("nickname", userDetails.getNickname());
             model.addAttribute("emotion", userDetails.getEmotion());
-            model.addAttribute("post",postResponse);
+            model.addAttribute("post", postResponse);
         }
-        if(userDetails == null){
+        if (userDetails == null) {
             PostResponse postResponse = postService.get(postId);
-            if(postResponse.getCommentResponses()!=null){
+            if (postResponse.getCommentResponses() != null) {
                 model.addAttribute("comments", postResponse.getCommentResponses());
             }
-            model.addAttribute("post",postResponse);
+            model.addAttribute("post", postResponse);
         }
         model.addAttribute("editCommentId", commentId);
         return "post/postCommentEdit";
     }
 
     @PutMapping("/posts/{postId}/comments/{commentId}")
-    public String edit(CommentEdit commentEdit, @PathVariable Long commentId, @PathVariable Long postId){
+    public String edit(CommentEdit commentEdit, @PathVariable Long commentId, @PathVariable Long postId,
+                       @AuthenticationPrincipal CustomUserDetails userDetails) {
+        checkUser(commentId, userDetails);
         commentService.edit(commentEdit, commentId);
         return "redirect:/posts/read/{postId}";
     }
 
-
     @DeleteMapping("/posts/{postId}/comments/{commentId}")
-    public String delete(@PathVariable Long postId, @PathVariable Long commentId){
+    public String delete(@PathVariable Long postId, @PathVariable Long commentId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        checkUser(commentId, userDetails);
         commentService.delete(commentId);
         return "redirect:/posts/read/{postId}";
+    }
+
+    private void checkUser(Long commentId, CustomUserDetails userDetails) {
+        if (!userDetails.getUsername().equals(commentService.get(commentId).getUsername()))throw new Unauthorized();
     }
 }

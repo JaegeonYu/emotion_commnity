@@ -96,5 +96,6 @@
   - [x] JPA Repository(existsQuery) + BindingResult addFiledError
 - [x] 로그인 오류
   - [x] Spring Security LoginFailure Handler + Thymeleaf
-- [ ] 해당 글,사용자, 댓글, 권한이 없을 때
-  - [ ] Abstract Exception + Controller Advice 
+- [x] 해당 글,사용자, 댓글, 권한이 없을 때
+  - [x] Abstract Exception + Controller Advice 
+- [x] 컨트롤러 상위 예외 외엔 ErrorController 사용

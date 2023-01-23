@@ -1,6 +1,7 @@
 package com.jackcomunity.emotionCommunity.entity;
 
 import com.jackcomunity.emotionCommunity.request.PostEdit;
+import com.jackcomunity.emotionCommunity.response.PostResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

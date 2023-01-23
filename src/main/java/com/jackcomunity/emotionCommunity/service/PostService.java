@@ -44,16 +44,12 @@ public class PostService {
 
     public PostResponse get(Long id) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFound::new);
-        return PostResponse.builder()
-                .post(post)
-                .build();
+        return new PostResponse(post);
     }
 
     public PostResponse getWithEmotion(Long id, Emotion emotion) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFound::new);
-        PostResponse postResponse = PostResponse.builder()
-                .post(post)
-                .build();
+        PostResponse postResponse = new PostResponse(post);
         if (emotion.equals(POSITIVE)) {
             postResponse.getCommentResponses().removeIf(comment -> !comment.getEmotion().equals(POSITIVE));
 
@@ -62,7 +58,6 @@ public class PostService {
             postResponse.getCommentResponses().removeIf(comment -> comment.getEmotion().equals(NEGATIVE));
         }
         return postResponse;
-
     }
 
     @Transactional
@@ -72,6 +67,7 @@ public class PostService {
         post.edit(postEdit);
     }
 
+    @Transactional
     public void delete(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
         postRepository.delete(post);

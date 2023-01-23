@@ -90,7 +90,6 @@ public class AccountController {
 
     @PostMapping("/emotion")
     public String emotionEdit(EmotionEdit emotionEdit, @AuthenticationPrincipal CustomUserDetails userDetails){
-        System.out.println(emotionEdit);
         userService.emotionEdit(emotionEdit);
         updateAuthToken(userDetails.getUsername(), emotionEdit.getPassword());
         return "redirect:/posts";
