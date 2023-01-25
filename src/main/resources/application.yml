@@ -17,7 +17,7 @@ spring:
     init:
       mode: always
   mvc:
-    hiddenmethod:
+    hidden-method:
       filter:
         enabled: true
 

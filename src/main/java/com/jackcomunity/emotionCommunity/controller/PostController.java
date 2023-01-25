@@ -1,6 +1,7 @@
 package com.jackcomunity.emotionCommunity.controller;
 
 import com.jackcomunity.emotionCommunity.exception.Unauthorized;
+import com.jackcomunity.emotionCommunity.request.CommentCreate;
 import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
 import com.jackcomunity.emotionCommunity.response.PageDto;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static com.jackcomunity.emotionCommunity.util.ControllerUtil.existsSession;
+
 @Controller
 @RequiredArgsConstructor
 public class PostController {
@@ -34,7 +37,6 @@ public class PostController {
         if (userDetails != null) {
             existsSession(model, userDetails);
         }
-
         return "post/posts";
     }
 
@@ -55,6 +57,7 @@ public class PostController {
             }
             model.addAttribute("post", postResponse);
         }
+        model.addAttribute("commentCreate", new CommentCreate());
         return "post/postView";
     }
 
@@ -126,11 +129,7 @@ public class PostController {
 
     private void userCheck(CustomUserDetails user, Long postId) {
         if (!user.getUsername().equals(postService.get(postId).getUsername()))throw  new Unauthorized();
-        System.out.println(user.getUsername() + " ===========" + postService.get(postId).getUsername());
     }
 
-    private void existsSession(Model model, CustomUserDetails user) {
-        model.addAttribute("nickname", user.getNickname());
-        model.addAttribute("emotion", user.getEmotion());
-    }
+
 }

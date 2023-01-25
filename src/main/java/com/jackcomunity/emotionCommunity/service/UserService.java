@@ -39,7 +39,6 @@ public class UserService {
 
     @Transactional
     public void emotionEdit(EmotionEdit emotionEdit){
-        System.out.println(emotionEdit.getUsername());
         User user = userRepository.findByUsername(emotionEdit.getUsername()).orElseThrow(UserNotFound::new);
         user.edit(emotionEdit.getEmotion());
     }

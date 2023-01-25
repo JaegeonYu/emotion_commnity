@@ -31,9 +31,9 @@ public class User extends TimeEntity {
     private Roles role;
     @Enumerated(EnumType.STRING)
     private Emotion emotion;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
     private List<Post> posts = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
     @Builder

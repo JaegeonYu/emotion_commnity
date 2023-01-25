@@ -5,20 +5,24 @@ import com.jackcomunity.emotionCommunity.exception.Unauthorized;
 import com.jackcomunity.emotionCommunity.repository.CommentRepository;
 import com.jackcomunity.emotionCommunity.request.CommentAjaxCreate;
 import com.jackcomunity.emotionCommunity.request.CommentEdit;
+import com.jackcomunity.emotionCommunity.request.MessageCreate;
 import com.jackcomunity.emotionCommunity.security.CustomUserDetails;
 import com.jackcomunity.emotionCommunity.request.CommentCreate;
 import com.jackcomunity.emotionCommunity.response.CommentResponse;
 import com.jackcomunity.emotionCommunity.response.PostResponse;
 import com.jackcomunity.emotionCommunity.service.CommentService;
 import com.jackcomunity.emotionCommunity.service.PostService;
+import com.jackcomunity.emotionCommunity.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -29,9 +33,13 @@ public class CommentController {
 
 
     @PostMapping("/posts/{postId}/comments")
-    public String save(@PathVariable Long postId, CommentCreate commentCreate, Authentication authentication) {
-
-        commentService.save(commentCreate, authentication.getName(), postId);
+    public String save(@PathVariable Long postId, @Valid CommentCreate commentCreate, BindingResult result, Model model,
+                       @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if(result.hasErrors()){
+            MessageCreate message = new MessageCreate("댓글의 형식이 올바르지 않습니다.", "/posts/read/"+postId, RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
+        commentService.save(commentCreate, userDetails.getUsername(), postId);
         return "redirect:/posts/read/{postId}";
     }
 
@@ -50,8 +58,7 @@ public class CommentController {
             if (postResponse.getCommentResponses() != null) {
                 model.addAttribute("comments", postResponse.getCommentResponses());
             }
-            model.addAttribute("nickname", userDetails.getNickname());
-            model.addAttribute("emotion", userDetails.getEmotion());
+            ControllerUtil.existsSession(model, userDetails);
             model.addAttribute("post", postResponse);
         }
         if (userDetails == null) {
@@ -66,12 +73,17 @@ public class CommentController {
     }
 
     @PutMapping("/posts/{postId}/comments/{commentId}")
-    public String edit(CommentEdit commentEdit, @PathVariable Long commentId, @PathVariable Long postId,
-                       @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public String edit(@Valid CommentEdit commentEdit, BindingResult result, @PathVariable Long commentId, @PathVariable Long postId,
+                       @AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         checkUser(commentId, userDetails);
+        if(result.hasErrors()){
+            MessageCreate message = new MessageCreate("댓글의 형식이 올바르지 않습니다.", "/posts/read/{postID}", RequestMethod.GET, null);
+            return showMessageAndRedirect(message, model);
+        }
         commentService.edit(commentEdit, commentId);
         return "redirect:/posts/read/{postId}";
     }
+
 
     @DeleteMapping("/posts/{postId}/comments/{commentId}")
     public String delete(@PathVariable Long postId, @PathVariable Long commentId, @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -82,5 +94,10 @@ public class CommentController {
 
     private void checkUser(Long commentId, CustomUserDetails userDetails) {
         if (!userDetails.getUsername().equals(commentService.get(commentId).getUsername()))throw new Unauthorized();
+    }
+
+    private String showMessageAndRedirect(final MessageCreate params, Model model){
+        model.addAttribute("params", params);
+        return "fragments/messageRedirect";
     }
 }

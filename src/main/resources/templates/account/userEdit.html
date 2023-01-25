@@ -32,6 +32,7 @@
 <form class="form-signin" method="post" th:action="@{/account/edit}" th:object="${userEdit}">
     <img class="mb-4" src="https://cdn-icons-png.flaticon.com/128/817/817787.png" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">사용자 정보 수정</h1>
+    <label th:for="username" class="sr-only">이메일</label>
     <input type="text" th:field="*{username}" class="form-control dis" placeholder="username" readonly>
     <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
 

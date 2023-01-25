@@ -12,6 +12,16 @@
     <title>Emotion Community</title>
 
 </head>
+<style>
+    p{
+        font-size: 2px;
+        font-weight: bold;
+        color: #b02a37;
+    }
+    .fieldError{
+        border-color: #bd2130;
+    }
+</style>
 <body>
 <div class="card" th:fragment="commentList" id="commentTable">
     <div class="card-header">
@@ -51,10 +61,11 @@
         댓글 작성
     </div>
     <div class="card-body">
-        <form th:action="@{|/posts/${post.id}/comments|}" sec:authorize="isAuthenticated()" method="post">
+        <form th:action="@{|/posts/${post.id}/comments|}" sec:authorize="isAuthenticated()" method="post" th:object="${commentCreate}">
             <div class="form-group">
-                <label for="content" th:text="${nickname}"></label>
-                <textarea class="form-control" id="content" rows="3" name="content"></textarea>
+                <label th:for="content" th:text="${nickname}"></label>
+                <textarea class="form-control" th:field="*{content}" rows="3"
+                          not></textarea>
             </div>
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-primary">Write</button>
