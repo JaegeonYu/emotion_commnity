@@ -23,12 +23,12 @@
        sec:authorize="!isAuthenticated()">회원가입</a>
     <form class="form-check-inline my-2 my-lg-0" sec:authorize="isAuthenticated()"
           th:action="@{/logout}" method="post">
-        <sapn class="text-white" th:text="${nickname}">사용자</sapn>
+        <sapn class="text-white" sec:authentication="principal.nickname">사용자</sapn>
         <sapn class="text-white">님 안녕하세요</sapn>
 
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">로그아웃</button>
     </form>
-    <button class="btn btn-warning" th:text="${emotion}" sec:authorize="isAuthenticated()"
+    <button class="btn btn-warning" sec:authentication="principal.emotion" sec:authorize="isAuthenticated()"
             th:onclick="|location.href='@{/account/emotion}'|"></button>
 
     <button class="btn btn-info" th:text="info" sec:authorize="isAuthenticated()"

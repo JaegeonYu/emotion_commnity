@@ -3,11 +3,9 @@ package com.jackcomunity.emotionCommunity.controller;
 import com.jackcomunity.emotionCommunity.request.*;
 import com.jackcomunity.emotionCommunity.security.CustomUserDetails;
 import com.jackcomunity.emotionCommunity.service.UserService;
-import com.jackcomunity.emotionCommunity.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,8 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import static com.jackcomunity.emotionCommunity.util.ControllerUtil.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -55,7 +51,6 @@ public class AccountController {
 
     @GetMapping("/edit")
     public String emotionForm(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        existsSession(model, userDetails);
         model.addAttribute("userEdit", UserEdit.builder().username(userDetails.getUsername())
                 .email(userDetails.getEmail())
                 .nickname(userDetails.getNickname()).build());
@@ -69,7 +64,6 @@ public class AccountController {
 
         if(result.hasErrors()){
             model.addAttribute("userEdit", userEdit);
-            existsSession(model, userDetails);
             return "account/userEdit";
         }
         userService.edit(userEdit);
@@ -79,7 +73,6 @@ public class AccountController {
     }
 
     private void updateAuthToken(String username, String password) {
-
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
 
@@ -88,8 +81,7 @@ public class AccountController {
 
     @Secured("ROLE_USER")
     @GetMapping("/emotion")
-    public String emotionFrom(@AuthenticationPrincipal CustomUserDetails userDetails, Model model){
-        existsSession(model, userDetails);
+    public String emotionFrom(){
         return "account/emotionEdit";
     }
 
@@ -97,7 +89,6 @@ public class AccountController {
     public String emotionEdit(EmotionEdit emotionEdit, @AuthenticationPrincipal CustomUserDetails userDetails){
         userService.emotionEdit(emotionEdit);
         updateAuthToken(userDetails.getUsername(), emotionEdit.getPassword());
-
         return "redirect:/posts";
     }
 }

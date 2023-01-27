@@ -52,6 +52,7 @@
   - [x] CustomUserDetailService 클래스 생성
   - [x] Role Entity -> Enum 변경
 - [x] UserDetail nickname 추가, Controller @AuthenticationPrincipal 접근
+- [ ] Controller + @AuthenticationPrincipal -> Thymeleaf Extras에서 Security Context 접근으로 변경
 
 ### Page
 - [x] PageDTO 생성

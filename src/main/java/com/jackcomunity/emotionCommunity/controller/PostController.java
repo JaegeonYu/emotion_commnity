@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.jackcomunity.emotionCommunity.util.ControllerUtil.existsSession;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,13 +29,10 @@ public class PostController {
 
     @GetMapping("/posts")
     public String list(Model model, @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)
-    Pageable pageable, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    Pageable pageable) {
         Page<PostResponse> posts = postService.getList(pageable);
         PageDto<PostResponse> postPageResponse = PageDto.of(posts);
         model.addAttribute("posts", postPageResponse);
-        if (userDetails != null) {
-            existsSession(model, userDetails);
-        }
         return "post/posts";
     }
 
@@ -47,7 +43,6 @@ public class PostController {
             if (postResponse.getCommentResponses() != null) {
                 model.addAttribute("comments", postResponse.getCommentResponses());
             }
-            existsSession(model, userDetails);
             model.addAttribute("post", postResponse);
         }
         if (userDetails == null) {
@@ -63,32 +58,26 @@ public class PostController {
 
     @GetMapping("/posts/search")
     public String search(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                         String searchText, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+                         String searchText, Model model) {
 
         Page<PostResponse> searchPosts = postService.search(searchText, pageable);
         PageDto searchPageResponse = PageDto.of(searchPosts);
         model.addAttribute("posts", searchPageResponse);
         model.addAttribute("searchText", searchText);
-        if (userDetails != null) {
-            existsSession(model, userDetails);
-        }
         return "post/postSearch";
     }
 
 
     @GetMapping("/posts/write")
-    public String addForm(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        if (userDetails != null) {
-            existsSession(model, userDetails);
-        }
+    public String addForm(Model model) {
         model.addAttribute("postCreate", new PostCreate());
         return "post/postForm";
     }
 
     @PostMapping("/posts")
-    public String create(@Valid PostCreate postCreate, BindingResult result, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public String create(@Valid PostCreate postCreate, BindingResult result, Model model,
+                         @AuthenticationPrincipal CustomUserDetails userDetails) {
         if (result.hasErrors()) {
-            existsSession(model, userDetails);
             return "post/postForm";
         }
         String username = userDetails.getUsername();
@@ -99,10 +88,8 @@ public class PostController {
     @GetMapping("/posts/edit/{postId}")
     public String edit(@PathVariable Long postId, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         PostResponse post = postService.get(postId);
-        if (userDetails != null) {
-            existsSession(model, userDetails);
-        }
         userCheck(userDetails, postId);
+
         model.addAttribute("postEdit", new PostEdit(post.getTitle(), post.getContent()));
         model.addAttribute("postId", postId);
         return "post/postEdit";
@@ -130,6 +117,4 @@ public class PostController {
     private void userCheck(CustomUserDetails user, Long postId) {
         if (!user.getUsername().equals(postService.get(postId).getUsername()))throw  new Unauthorized();
     }
-
-
 }

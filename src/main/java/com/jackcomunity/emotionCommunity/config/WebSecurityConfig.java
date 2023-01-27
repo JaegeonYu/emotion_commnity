@@ -22,7 +22,7 @@ public class WebSecurityConfig {
                 formLogin((form)->form
                         .loginPage("/account/login").permitAll()
                         .defaultSuccessUrl("/posts")
-                            .failureUrl("/account/login?error"))
+                        .failureUrl("/account/login?error"))
                 .logout().permitAll()
                 .logoutSuccessUrl("/posts");
 

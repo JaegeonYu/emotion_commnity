@@ -1,21 +1,14 @@
 package com.jackcomunity.emotionCommunity.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jackcomunity.emotionCommunity.exception.Unauthorized;
-import com.jackcomunity.emotionCommunity.repository.CommentRepository;
-import com.jackcomunity.emotionCommunity.request.CommentAjaxCreate;
 import com.jackcomunity.emotionCommunity.request.CommentEdit;
 import com.jackcomunity.emotionCommunity.request.MessageCreate;
 import com.jackcomunity.emotionCommunity.security.CustomUserDetails;
 import com.jackcomunity.emotionCommunity.request.CommentCreate;
-import com.jackcomunity.emotionCommunity.response.CommentResponse;
 import com.jackcomunity.emotionCommunity.response.PostResponse;
 import com.jackcomunity.emotionCommunity.service.CommentService;
 import com.jackcomunity.emotionCommunity.service.PostService;
-import com.jackcomunity.emotionCommunity.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -53,12 +45,11 @@ public class CommentController {
     @GetMapping("/posts/{postId}/comments/{commentId}")
     public String editForm(@PathVariable Long postId, @PathVariable Long commentId, Model model,
                            @AuthenticationPrincipal CustomUserDetails userDetails) {
-        if (userDetails != null) {
+        if(userDetails != null) {
             PostResponse postResponse = postService.getWithEmotion(postId, userDetails.getEmotion());
             if (postResponse.getCommentResponses() != null) {
                 model.addAttribute("comments", postResponse.getCommentResponses());
             }
-            ControllerUtil.existsSession(model, userDetails);
             model.addAttribute("post", postResponse);
         }
         if (userDetails == null) {
