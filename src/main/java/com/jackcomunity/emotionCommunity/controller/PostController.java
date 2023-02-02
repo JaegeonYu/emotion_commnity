@@ -4,6 +4,7 @@ import com.jackcomunity.emotionCommunity.exception.Unauthorized;
 import com.jackcomunity.emotionCommunity.request.CommentCreate;
 import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
+import com.jackcomunity.emotionCommunity.response.CommentResponse;
 import com.jackcomunity.emotionCommunity.response.PageDto;
 import com.jackcomunity.emotionCommunity.response.PostResponse;
 import com.jackcomunity.emotionCommunity.security.CustomUserDetails;
@@ -20,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -28,7 +30,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/posts")
-    public String list(Model model, @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)
+    public String list(Model model, @PageableDefault(size = 6, sort = "id", direction = Sort.Direction.DESC)
     Pageable pageable) {
         Page<PostResponse> posts = postService.getList(pageable);
         PageDto<PostResponse> postPageResponse = PageDto.of(posts);
@@ -57,7 +59,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/search")
-    public String search(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+    public String search(@PageableDefault(size = 6, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                          String searchText, Model model) {
 
         Page<PostResponse> searchPosts = postService.search(searchText, pageable);
@@ -84,6 +86,7 @@ public class PostController {
         postService.write(postCreate, username);
         return "redirect:/posts";
     }
+    
 
     @GetMapping("/posts/edit/{postId}")
     public String edit(@PathVariable Long postId, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {

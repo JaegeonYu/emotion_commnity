@@ -52,7 +52,7 @@
   - [x] CustomUserDetailService 클래스 생성
   - [x] Role Entity -> Enum 변경
 - [x] UserDetail nickname 추가, Controller @AuthenticationPrincipal 접근
-- [ ] Controller + @AuthenticationPrincipal -> Thymeleaf Extras에서 Security Context 접근으로 변경
+- [x] Controller + @AuthenticationPrincipal -> Thymeleaf Extras에서 Security Context 접근으로 변경
 
 ### Page
 - [x] PageDTO 생성
@@ -100,9 +100,10 @@
 - [x] 해당 글,사용자, 댓글, 권한이 없을 때
   - [x] Abstract Exception + Controller Advice 
 - [x] 컨트롤러 상위 예외 외엔 ErrorController 사용
-- [ ] 댓글 유효성 검사
-  - [ ] @NotBlank + @Valid
-  - [ ] Thymeleaf Alert 및 Redirect
-- [ ] 사용자 감정 정보 변경 시 비밀번호 일치 확인
-  - [ ] 일치하지 않으면 DaoAuthenticationProvider -> BadCredentialsException 발생
-  - [ ]
+- [x] 댓글 유효성 검사
+  - [x] @NotBlank + @Valid
+  - [x] Thymeleaf Alert 및 Redirect
+- [x] 사용자 감정 정보 변경 시 비밀번호 일치 확인
+  - [x] 일치하지 않으면 DaoAuthenticationProvider -> BadCredentialsException 발생
+  - [x] ControllerAdvice BadCredentials Exception Handler 추가
+  

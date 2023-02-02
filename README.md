@@ -79,7 +79,35 @@
 ![img_1.png](img_1.png)
 ![img_2.png](img_2.png)
 ![img_3.png](img_3.png)
-## 8. 개발내용
+## 7. 개발
+- [Spring Security + Spring Data JPA Login Process 알아보기, 회원가입 로그인 구현](https://anythingis.tistory.com/79)
+- [Spring Data JPA, JPA Repository + Pageable 이용한 페이징](https://anythingis.tistory.com/80)
+- [Spring Data JPA, JPA Repository + 쿼리 파생문 이용한 검색 페이징](https://anythingis.tistory.com/81)
+- [Spring의 RestTemplate으로 외부 API 이용하기(Naver 감정분석 API 이용한 댓글 감정분석), 댓글 작성 구현](https://anythingis.tistory.com/82)
+- [Spring Security + Thymeleaf Extras SpringSecurity, JPA 연관관계 맵핑으로 글 작성자의 글관리 구현](https://anythingis.tistory.com/83)
+- [JPA Auditing 생성일, 수정일 추가](https://anythingis.tistory.com/84)
+- [댓글 작성자만 수정, 삭제 기능 구현](https://anythingis.tistory.com/86)
+- [BindingResult + Thymelaf 이용한 회원정보 유효성검사, 중복검사 구현, Spring Security 이용한 로그인 예외 처리 구현](https://anythingis.tistory.com/87)
+- [Spring Boot Basic Error Controller 이용한 에러 페이지 처리, ControllerAdvier + ExceptionHandler 이용한 UnchekdExcpetion 핸들링](https://anythingis.tistory.com/89)
+- [댓글 서비스 내에 댓글 필터링 구현](https://anythingis.tistory.com/89)
+- [DB 변경 및 Spring Security UsernamePasswordToken 재등록을 통한 유저의 댓글 필터링 서비스 적용 감정 변경, 유저정보 변경](https://anythingis.tistory.com/90)
+- [Thymeleaf Extras Security의 Principal 접근으로 세션 정보 표기](https://anythingis.tistory.com/91)
+## 8. 후기
+CRUD 기능을 구현하면 기본적으로 많이 만드는 게시판에 추후에 만들고싶은 감정 커뮤니티의 일부의 아이디어인 댓글 작성을 할 때 감정을 분석해 커뮤니티를 이용하면서 댓글을 필터링하는 서비스를 추가해 구현했습니다. 
+자바, 스프링을 배우면서 강의를 보면서 따라가긴 많이 해봤지만 혼자 힘으로 시작하는 첫 프로젝트여서 많이 막히기도 했지만 많이 배웠습니다.
+
+
+1. 서버 사이드 렌더링 할 때 사용자에게 보여주는 부분까지 설계를 할 때 고려하기
+    -  비즈니스 로직부분 외에도 서비스 플로우를 생각해 비즈니스 로직요청을 위한 폼, 페이지에 대한 부분과 처리 후에 어떻게 될지까지 고려해서 설계해야하는 걸 배웠습니다.
+2. 시큐리티 맛보기
+   - 유저를 관리하는 서비스가 처음이여서 회원가입, 로그인처리 부분을 이해하며 시큐리티 끝인줄 알았는데 유저정보 수정할 때 주입받은 AuthManager를 통한 세션 재등록을 경험하면서 거의 모든 부분을 기본 구현체로 사용하고 있다는 것과 맛만 본것을 깨달았습니다.
+3. 유저 세션관리
+   - 유저관리를 처음 경험하기도 하고 Thymeleaf Extras Security를 사용해 나름 손쉽게 구현한 것 같지만 View단에서도 세션관리는 너무 유기적인 것 같다는 생각과 규모가 작은 서버사이드 렌더링 서비스에서의 생산성에 대한 고민을 해볼 수 있었습니다.
+
+
+이 프로젝트로 DB설계가 간단하고 서비스 로직도 간단한 주제를 구현하면서 스프링부트의 전반적인 부분에 대해 공부하면서 지식과 자신감을 쌓았고 앞으로의 프로젝트에는 객체지향을 더 알아가며 좀 더 복잡한 서비스에 녹여보고 싶다는 목표가 생겼습니다. 
+
+
 
 
     
