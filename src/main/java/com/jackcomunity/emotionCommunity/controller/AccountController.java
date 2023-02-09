@@ -4,12 +4,14 @@ import com.jackcomunity.emotionCommunity.request.*;
 import com.jackcomunity.emotionCommunity.security.CustomUserDetails;
 import com.jackcomunity.emotionCommunity.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +23,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/account")
 public class AccountController {
+    @Autowired
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
@@ -48,7 +51,6 @@ public class AccountController {
         userService.save(user);
         return "redirect:/account/login";
     }
-
     @GetMapping("/edit")
     public String emotionForm(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         model.addAttribute("userEdit", UserEdit.builder().username(userDetails.getUsername())
