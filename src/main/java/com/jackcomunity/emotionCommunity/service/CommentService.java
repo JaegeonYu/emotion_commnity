@@ -36,7 +36,7 @@ public class CommentService {
     private final UserRepository userRepository;
     private final TemplateCreate templateCreate;
 
-
+    @Transactional
     public void save(CommentCreate commentCreate, String username, Long postId) {
         Emotion emotion = emotionDiscrimination(commentCreate.getContent());
         commentCreate.setEmotion(emotion);

@@ -3,6 +3,7 @@ package com.jackcomunity.emotionCommunity.service;
 import com.jackcomunity.emotionCommunity.entity.User;
 import com.jackcomunity.emotionCommunity.repository.PostRepository;
 import com.jackcomunity.emotionCommunity.repository.UserRepository;
+import com.jackcomunity.emotionCommunity.request.UserCheck;
 import com.jackcomunity.emotionCommunity.request.UserCreate;
 import com.jackcomunity.emotionCommunity.request.UserEdit;
 import com.jackcomunity.emotionCommunity.util.Emotion;
@@ -16,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 
 import java.util.Optional;
 
@@ -44,9 +47,7 @@ public class UserServiceTest {
 
     @Test
     public void edit_test(){
-        userRepository.save(User.builder().username("jack").password(passwordEncoder.encode("1234"))
-                        .role(Roles.USER)
-                .email("yjk98053@gmail.com").nickname("biobebe").build());
+        saveUserToRepository();
 
         UserEdit userEdit = UserEdit.builder().username("jack").nickname("change").email("yjk98053@gmail.com").build();
         userEdit.setPassword("4567");
@@ -55,5 +56,11 @@ public class UserServiceTest {
         Optional<User> findUser = userRepository.findByUsername("jack");
         assertEquals(findUser.get().getNickname(), userEdit.getNickname());
         assertTrue(passwordEncoder.matches(userEdit.getPassword(), findUser.get().getPassword()));
+    }
+
+    private void saveUserToRepository() {
+        userRepository.save(User.builder().username("jack").password(passwordEncoder.encode("1234"))
+                .role(Roles.USER)
+                .email("yjk98053@gmail.com").nickname("biobebe").build());
     }
 }
