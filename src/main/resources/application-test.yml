@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/emotion_community?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
+    username: myadmin
+    password: 1q2w3e4r!
+external:
+  api:
+    name: naver
+    key-id: X-NCP-APIGW-API-KEY-ID
+    key: X-NCP-APIGW-API-KEY
+    id-value: kqbsl73zud
+    key-value: VvtBM1RYRdIoYBcmJ1lJ5F2kzDv7oXkR59BJKHCP
+    url: https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze

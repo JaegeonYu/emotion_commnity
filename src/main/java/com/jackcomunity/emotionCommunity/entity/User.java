@@ -1,5 +1,6 @@
 package com.jackcomunity.emotionCommunity.entity;
 
+import com.jackcomunity.emotionCommunity.request.UserCreate;
 import com.jackcomunity.emotionCommunity.util.Emotion;
 import com.jackcomunity.emotionCommunity.util.Roles;
 import lombok.Builder;

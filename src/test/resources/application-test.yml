@@ -1,8 +1,8 @@
 spring:
   profiles:
-    include: security
+    dev: test
   jpa:
-    database: mysql
+    database: H2
     show-sql: true
     hibernate:
       ddl-auto: create-drop
