@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -23,11 +25,9 @@ public class Post extends TimeEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "post")
+    private Set<Comment> comments = new HashSet<>();
 
     @Builder
     public Post(String title, String content, User user) {
@@ -43,7 +43,6 @@ public class Post extends TimeEntity {
 
     public void addComment(Comment comment) {
         this.comments.add(comment);
-        comment.setPost(this);
     }
 }
 
