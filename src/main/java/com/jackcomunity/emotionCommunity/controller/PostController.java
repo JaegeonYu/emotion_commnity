@@ -1,6 +1,8 @@
 package com.jackcomunity.emotionCommunity.controller;
 
+import com.jackcomunity.emotionCommunity.entity.User;
 import com.jackcomunity.emotionCommunity.exception.Unauthorized;
+import com.jackcomunity.emotionCommunity.repository.UserRepository;
 import com.jackcomunity.emotionCommunity.request.CommentCreate;
 import com.jackcomunity.emotionCommunity.request.PostCreate;
 import com.jackcomunity.emotionCommunity.request.PostEdit;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+    private final UserRepository userRepository;
 
     @GetMapping("/posts")
     public String list(Model model, @PageableDefault(size = 6, sort = "id", direction = Sort.Direction.DESC)
@@ -82,8 +85,8 @@ public class PostController {
         if (result.hasErrors()) {
             return "post/postForm";
         }
-        String username = userDetails.getUsername();
-        postService.write(postCreate, username);
+        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+        postService.write(postCreate, user);
         return "redirect:/posts";
     }
     

@@ -21,21 +21,19 @@ public class Comment {
     private String content;
     @Enumerated(EnumType.STRING)
     private Emotion emotion;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    @Setter
-    private Post post;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @Setter
+
+    @ManyToOne
     private User user;
+    @ManyToOne
+    private Post post;
+
 
     @Builder
-    public Comment(String content, Emotion emotion, Post post, User user) {
+    public Comment(String content, Emotion emotion, User user, Post post) {
         this.content = content;
         this.emotion = emotion;
-        this.post = post;
         this.user = user;
+        this.post =post;
     }
 
     public void edit(CommentEdit commentEdit){

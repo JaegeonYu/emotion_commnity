@@ -2,12 +2,12 @@ spring.main.allow-bean-definition-overriding: true
 spring.main.allow-circular-references: true
 spring:
   profiles:
-    include: security
+    include: test
   jpa:
     database: mysql
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true

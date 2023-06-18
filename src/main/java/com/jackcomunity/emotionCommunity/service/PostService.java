@@ -24,15 +24,11 @@ import static com.jackcomunity.emotionCommunity.util.Emotion.*;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
-
 
     @Transactional
-    public void write(PostCreate postCreate, String username) {
-        User user = userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
+    public void write(PostCreate postCreate, User user) {
         postCreate.setUser(user);
         Post writePost = postCreate.toEntity();
-
         postRepository.save(writePost);
     }
 
@@ -45,12 +41,12 @@ public class PostService {
     }
 
     public PostResponse get(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(PostNotFound::new);
+        Post post = postRepository.findPostWithCommentsById(id).orElseThrow(PostNotFound::new);
         return new PostResponse(post);
     }
 
     public PostResponse getWithEmotion(Long id, Emotion emotion) {
-        Post post = postRepository.findById(id).orElseThrow(PostNotFound::new);
+        Post post = postRepository.findPostWithCommentsById(id).orElseThrow(PostNotFound::new);
         PostResponse postResponse = new PostResponse(post);
         if (emotion.equals(POSITIVE)) {
             postResponse.getCommentResponses().removeIf(comment -> !comment.getEmotion().equals(POSITIVE));

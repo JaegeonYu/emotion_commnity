@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/emotion_community?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
-    username: myadmin
-    password: 1q2w3e4r!
+    url: jdbc:mysql://${db.url}:${db.port}/emotion_community?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
+    username: ${db.username}
+    password: ${db.password}
 external:
   api:
     name: naver

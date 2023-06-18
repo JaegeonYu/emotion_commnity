@@ -41,12 +41,12 @@ public class CommentService {
         Emotion emotion = emotionDiscrimination(commentCreate.getContent());
         commentCreate.setEmotion(emotion);
 
-        Comment comment = commentCreate.toEntity();
-
         User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
-        user.addComment(comment);
         Post post = postRepository.findById(postId).orElseThrow(PostNotFound::new);
-        post.addComment(comment);
+        commentCreate.setUser(user);
+        commentCreate.setPost(post);
+
+        Comment comment = commentCreate.toEntity();
 
         commentRepository.save(comment);
     }

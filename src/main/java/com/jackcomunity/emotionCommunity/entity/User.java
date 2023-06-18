@@ -1,6 +1,4 @@
 package com.jackcomunity.emotionCommunity.entity;
-
-import com.jackcomunity.emotionCommunity.request.UserCreate;
 import com.jackcomunity.emotionCommunity.util.Emotion;
 import com.jackcomunity.emotionCommunity.util.Roles;
 import lombok.Builder;
@@ -8,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,10 +30,10 @@ public class User extends TimeEntity {
     private Roles role;
     @Enumerated(EnumType.STRING)
     private Emotion emotion;
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
-    private List<Post> posts = new ArrayList<>();
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
-    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private Set<Post> posts = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments = new HashSet<>();
 
     @Builder
     public User(String username, String nickname, String email, String password, Roles role, Emotion emotion) {
@@ -56,7 +54,6 @@ public class User extends TimeEntity {
     }
 
     public void addComment(Comment comment) {
-        comment.setUser(this);
         comments.add(comment);
     }
 }
